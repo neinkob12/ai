@@ -1,0 +1,160 @@
+{
+  "shots": [
+    {
+      "id": "daniel_philipp_interaction",
+      "title": "Daniel and Philipp interaction",
+      "in_else": true,
+      "characters": ["daniel", "philipp"],
+      "visual_prompt": "Daniel and Philipp have a back-and-forth interaction, sitting in die Else",
+      "dialogue": []
+    },
+    {
+      "id": "else_brand_chaos",
+      "title": "\"Else Brand\" chaotic situation",
+      "in_else": true,
+      "characters": [],
+      "visual_prompt": "A chaotic, everything-going-wrong 'Else Brand' moment in the apartment",
+      "dialogue": []
+    },
+    {
+      "id": "three_baked_phonecall",
+      "title": "3 baked, phone call, \"Fotze öffnen\"",
+      "in_else": true,
+      "characters": [],
+      "visual_prompt": "Three guys sit around completely baked; one gets a phone call and answers",
+      "dialogue": [
+        { "character": null, "line": "Fotze öffnen", "voice_id": null }
+      ]
+    },
+    {
+      "id": "jakob_cleans_up",
+      "title": "Jakob cleans up while everyone sits around chopped",
+      "in_else": true,
+      "characters": [],
+      "visual_prompt": "Jakob tidies up the room while everyone else sits around, completely checked out",
+      "dialogue": []
+    },
+    {
+      "id": "josef_kivlov",
+      "title": "Josef says \"KIVLOV EET OREZ\"",
+      "in_else": true,
+      "characters": ["josef"],
+      "visual_prompt": "Josef stands looking into the camera, speaking very slowly and deliberately",
+      "dialogue": [
+        { "character": "josef", "line": "KIVLOV EET OREZ", "voice_id": null }
+      ]
+    },
+    {
+      "id": "theo_praeunla",
+      "title": "Theo says \"P R A E U N L A\"",
+      "in_else": true,
+      "characters": ["theo"],
+      "visual_prompt": "Theo looks into the camera and says something slowly, letter by letter",
+      "dialogue": [
+        { "character": "theo", "line": "P R A E U N L A", "voice_id": null }
+      ]
+    },
+    {
+      "id": "laurenz_joint_falls_apart",
+      "title": "Laurenz licks the paper, joint falls apart",
+      "in_else": true,
+      "characters": ["laurenz"],
+      "visual_prompt": "Laurenz licks the rolling paper off a joint and the contents fall apart",
+      "dialogue": []
+    },
+    {
+      "id": "laurenz_joint_josef_2",
+      "title": "Laurenz licks the paper, Josef says \"2.\"",
+      "in_else": true,
+      "characters": ["laurenz", "josef"],
+      "visual_prompt": "Laurenz licks the rolling paper off a joint, Josef reacts",
+      "dialogue": [
+        { "character": "josef", "line": "2.", "voice_id": null }
+      ]
+    },
+    {
+      "id": "laurenz_joint_theo_2",
+      "title": "Laurenz licks the paper, Theo says \"2.\"",
+      "in_else": true,
+      "characters": ["laurenz", "theo"],
+      "visual_prompt": "Laurenz licks the rolling paper off a joint, Theo reacts",
+      "dialogue": [
+        { "character": "theo", "line": "2.", "voice_id": null }
+      ]
+    },
+    {
+      "id": "laurenz_joint_theo_2_falls",
+      "title": "Laurenz licks the paper, Theo says \"2.\", joint falls out of his hand",
+      "in_else": true,
+      "characters": ["laurenz", "theo"],
+      "visual_prompt": "Laurenz licks the rolling paper off a joint, Theo reacts, then the joint falls out of Laurenz's hand",
+      "dialogue": [
+        { "character": "theo", "line": "2.", "voice_id": null }
+      ]
+    },
+    {
+      "id": "josef_alone_smoking",
+      "title": "Josef alone in the Else smoking a cigarette",
+      "in_else": true,
+      "characters": ["josef"],
+      "visual_prompt": "Josef sits alone in die Else, smoking a cigarette",
+      "dialogue": []
+    },
+    {
+      "id": "everyone_phones_silence",
+      "title": "Everyone on their phones, long silence",
+      "in_else": true,
+      "characters": [],
+      "visual_prompt": "Several people sit around the room, all looking down at their phones, long silence, music playing faintly in the background",
+      "dialogue": []
+    },
+    {
+      "id": "laurenz_coughing_fit",
+      "title": "Laurenz has a coughing fit",
+      "in_else": true,
+      "characters": ["laurenz"],
+      "visual_prompt": "Laurenz has a sudden coughing fit",
+      "dialogue": []
+    },
+    {
+      "id": "uber_eats_delivery",
+      "title": "Uber Eats gets delivered",
+      "in_else": true,
+      "characters": [],
+      "visual_prompt": "An Uber Eats delivery arrives at die Else",
+      "dialogue": []
+    },
+    {
+      "id": "letzter_jibbit_1",
+      "title": "Letzter Jibbit, scene 1 of 4",
+      "in_else": true,
+      "characters": [],
+      "visual_prompt": "",
+      "dialogue": []
+    },
+    {
+      "id": "letzter_jibbit_2",
+      "title": "Letzter Jibbit, scene 2 of 4",
+      "in_else": true,
+      "characters": [],
+      "visual_prompt": "",
+      "dialogue": []
+    },
+    {
+      "id": "letzter_jibbit_3",
+      "title": "Letzter Jibbit, scene 3 of 4",
+      "in_else": true,
+      "characters": [],
+      "visual_prompt": "",
+      "dialogue": []
+    },
+    {
+      "id": "letzter_jibbit_4",
+      "title": "Letzter Jibbit, scene 4 of 4",
+      "in_else": true,
+      "characters": [],
+      "visual_prompt": "",
+      "dialogue": []
+    }
+  ]
+}

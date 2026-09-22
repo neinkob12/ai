@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{ shot.title }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <p><a href="{{ url_for('index') }}">&larr; all shots</a></p>
+  <h1>{{ shot.title }} {% if state.locked %}<span class="badge">LOCKED</span>{% endif %}</h1>
+  <p>Characters: {{ shot.characters | join(', ') if shot.characters else '(unset)' }}</p>
+  <p>
+    Location: {{ 'die Else' if shot.in_else else '—' }}
+    {% if shot.in_else and locations.else.template_image %}
+      <br><img class="thumb" src="{{ url_for('assets', filepath=locations.else.template_image) }}" alt="die Else">
+    {% endif %}
+  </p>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flash">
+        {% for m in messages %}<li>{{ m }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <section>
+    <h2>Visual prompt</h2>
+    <form method="post" action="{{ url_for('update_prompt', shot_id=shot.id) }}">
+      <textarea name="visual_prompt" rows="3" {{ 'disabled' if state.locked else '' }}>{{ state.working_prompt }}</textarea>
+      <button type="submit" {{ 'disabled' if state.locked else '' }}>Save prompt</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Dialogue</h2>
+    {% if not shot.dialogue %}
+      <p>(silent shot, no dialogue)</p>
+    {% else %}
+      {% for entry in state.working_dialogue %}
+        <div class="dialogue-entry">
+          <p>{{ entry.character or '(speaker unset)' }}:</p>
+          <form method="post" action="{{ url_for('update_dialogue', shot_id=shot.id, index=loop.index0) }}">
+            <input type="text" name="line" value="{{ entry.line }}" {{ 'disabled' if state.locked else '' }}>
+            <button type="submit" {{ 'disabled' if state.locked else '' }}>Save line</button>
+          </form>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </section>
+
+  <section>
+    <h2>Voice</h2>
+    {% if not shot.dialogue %}
+      <p>No dialogue on this shot, nothing to voice.</p>
+    {% else %}
+      <form method="post" action="{{ url_for('generate_voice_route', shot_id=shot.id) }}">
+        <button type="submit" {{ 'disabled' if state.locked else '' }}>Generate voice</button>
+      </form>
+      {% for take in state.voice_takes | reverse %}
+        <div class="take {{ 'accepted' if take.version == state.accepted_voice else '' }}">
+          <p>v{{ take.version }} {{ '(accepted)' if take.version == state.accepted_voice else '' }} &mdash; &quot;{{ take.text_used }}&quot;</p>
+          <audio controls src="{{ url_for('media', filepath=take.path) }}"></audio>
+          {% if take.version != state.accepted_voice and not state.locked %}
+          <form method="post" action="{{ url_for('accept_voice', shot_id=shot.id, version=take.version) }}">
+            <button type="submit">Accept this take</button>
+          </form>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </section>
+
+  <section>
+    <h2>Video</h2>
+    <form method="post" action="{{ url_for('generate_video_route', shot_id=shot.id) }}">
+      <button type="submit" {{ 'disabled' if state.locked else '' }}>Generate video</button>
+    </form>
+    {% for take in state.video_takes | reverse %}
+      <div class="take {{ 'accepted' if take.version == state.accepted_video else '' }}">
+        <p>v{{ take.version }} {{ '(accepted)' if take.version == state.accepted_video else '' }}</p>
+        <video controls width="360" src="{{ url_for('media', filepath=take.path) }}"></video>
+        {% if take.version != state.accepted_video and not state.locked %}
+        <form method="post" action="{{ url_for('accept_video', shot_id=shot.id, version=take.version) }}">
+          <button type="submit">Accept this take</button>
+        </form>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </section>
+
+  <section>
+    <h2>Lipsync</h2>
+    {% if not lipsync_eligible %}
+      <p>Not available: lipsync only runs on shots with exactly one dialogue line.</p>
+    {% elif not state.accepted_voice or not state.accepted_video %}
+      <p>Accept a voice take and a video take first.</p>
+    {% else %}
+      <form method="post" action="{{ url_for('generate_lipsync_route', shot_id=shot.id) }}">
+        <button type="submit" {{ 'disabled' if state.locked else '' }}>{{ 'Regenerate' if state.lipsync_output else 'Generate' }} lipsync</button>
+      </form>
+      {% if state.lipsync_output %}
+        <video controls width="360" src="{{ url_for('media', filepath=state.lipsync_output) }}"></video>
+      {% endif %}
+    {% endif %}
+  </section>
+
+  <section>
+    <h2>Lock</h2>
+    {% if state.locked %}
+      <p>This shot is locked.</p>
+    {% else %}
+      <form method="post" action="{{ url_for('lock', shot_id=shot.id) }}">
+        <button type="submit">Lock shot</button>
+      </form>
+    {% endif %}
+  </section>
+</body>
+</html>

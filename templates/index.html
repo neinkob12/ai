@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Else Clips</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>Else Clips</h1>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flash">
+        {% for m in messages %}<li>{{ m }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <table>
+    <thead>
+      <tr><th>Shot</th><th>Voice</th><th>Video</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      {% for shot in shots %}
+      <tr class="{{ 'locked' if shot.locked else '' }}">
+        <td><a href="{{ url_for('shot_detail', shot_id=shot.id) }}">{{ shot.title }}</a></td>
+        <td>{{ ('accepted v' ~ shot.accepted_voice) if shot.accepted_voice else '—' }}</td>
+        <td>{{ ('accepted v' ~ shot.accepted_video) if shot.accepted_video else '—' }}</td>
+        <td>{{ 'locked' if shot.locked else 'open' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "characters": {
+    "josef":   { "display_name": "Josef",   "voice_id": "", "reference_image": null },
+    "daniel":  { "display_name": "Daniel",  "voice_id": "", "reference_image": null },
+    "philipp": { "display_name": "Philipp", "voice_id": "", "reference_image": null },
+    "theo":    { "display_name": "Theo",    "voice_id": "", "reference_image": null },
+    "laurenz": { "display_name": "Laurenz", "voice_id": "", "reference_image": null }
+  }
+}

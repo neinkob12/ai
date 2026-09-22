@@ -1,0 +1,7 @@
+{
+  "else": {
+    "display_name": "die Else",
+    "template_image": null,
+    "description": "recurring apartment room; every in_else shot attaches this image for scene consistency"
+  }
+}
