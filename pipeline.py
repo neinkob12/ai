@@ -26,9 +26,14 @@ if FAL_KEY:
     os.environ.setdefault("FAL_KEY", FAL_KEY)
 
 
-def build_video_prompt(visual_prompt: str, style: str | None = None) -> str:
-    """Prepends the house PS2-style block, or a per-shot style override if given."""
-    return f"{style or ART_STYLE_BLOCK} {visual_prompt}".strip()
+def build_video_prompt(visual_prompt: str, style: str | None = None,
+                        location_description: str | None = None,
+                        character_descriptions: str | None = None) -> str:
+    """Assembles a video prompt: style block, then location, then character
+    design blocks, then the shot-specific action. Style defaults to the house
+    PS2 block; location/character blocks are omitted when not given."""
+    parts = [style or ART_STYLE_BLOCK, location_description, character_descriptions, visual_prompt]
+    return " ".join(p.strip() for p in parts if p and p.strip())
 
 
 def generate_voice(text: str, voice_id: str, out_path: str,

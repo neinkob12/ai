@@ -155,6 +155,220 @@
       "characters": [],
       "visual_prompt": "",
       "dialogue": []
+    },
+
+    {
+      "id": "fruit_v1_s01_glass_empty",
+      "title": "Fruit V1 Shot 1: Theos Zimmer, das Problem",
+      "location_id": null,
+      "characters": ["theo_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Interior attic bedroom with slanted ceiling and a skylight, evening light. Messy room: clothes everywhere, a cluttered desk, a small coffee table in front of a worn sofa with a huge overflowing ashtray on it. Theo sits on the sofa, rolling papers ready, picks up an empty glass jar labeled 'OTT', turns it upside down, nothing falls out. His face collapses into pure despair, he holds the jar to the skylight like checking for one last crumb. Close-up on his devastated face.",
+      "dialogue": [
+        { "character": "theo_fruit", "line": "Nein... nein nein nein.", "voice_id": null }
+      ]
+    },
+    {
+      "id": "fruit_v1_s02_stairs_run",
+      "title": "Fruit V1 Shot 2: Treppe runter, die Tuer",
+      "location_id": null,
+      "characters": ["theo_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Theo runs down a narrow staircase in a German family home, socks sliding on the wooden steps, camera follows handheld from behind. He stops abruptly in front of a closed dark wooden door at the end of a dim hallway. Slow push-in on the door. Theo swallows nervously. The doorknob gleams dramatically.",
+      "dialogue": []
+    },
+    {
+      "id": "fruit_v1_s03_vadder_flashback",
+      "title": "Fruit V1 Shot 3: Flashback Vadder",
+      "location_id": null,
+      "characters": ["vadder_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "FLASHBACK, slightly desaturated warm tint, film grain. A dark cluttered home office, papers and junk everywhere, thick smoke hanging in the air. Vadder sits in an office chair surrounded by haze, several joints in the ashtray, one in his hand. He turns slowly to camera and grins mischievously through the smoke. Slow zoom on his grin, followed by a low chuckle.",
+      "dialogue": []
+    },
+    {
+      "id": "fruit_v1_s04_theft",
+      "title": "Fruit V1 Shot 4: Der Diebstahl",
+      "location_id": null,
+      "characters": ["theo_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Back to present. Theo sneaks into the dark office on tiptoes, exaggerated cartoon sneaking. On a shelf: a big glass jar labeled 'VADDERS OTT', generously filled. Theo carefully takes a handful out and stuffs it into a small baggie, glancing over his shoulder twice. He slips out, closes the door silently, then sprints away. Quick cut, comedic timing.",
+      "dialogue": []
+    },
+    {
+      "id": "fruit_v1_s05_park_empty_josef",
+      "title": "Fruit V1 Shot 5: Park mit Josef, wieder leer",
+      "location_id": "park",
+      "characters": ["theo_fruit", "josef_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Text overlay: '1 WOCHE SPAETER'. Theo and Josef sitting on the backrest of a park bench, relaxed, smoke drifting. Theo pulls out his baggie, holds it up: completely empty. Both stare at it. Beat. Then both burst into loud exaggerated crying at the same time, heads thrown back, cartoon tears spraying.",
+      "dialogue": [
+        { "character": "josef_fruit", "line": "Bau einen, Akh.", "voice_id": null }
+      ]
+    },
+    {
+      "id": "fruit_v1_s06_the_plan",
+      "title": "Fruit V1 Shot 6: Der Plan",
+      "location_id": "park",
+      "characters": ["theo_fruit", "josef_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Same park bench, seconds later. Josef, suddenly dead serious, still with wet eyes, speaks. Theo's face lights up instantly, he yells and lets out a single sharp dog bark. Josef nods approvingly like that was a completely normal reaction. Freeze frame on both grinning.",
+      "dialogue": [
+        { "character": "josef_fruit", "line": "Lass von Vadder was ziehen gehen, mein Akh.", "voice_id": null },
+        { "character": "theo_fruit", "line": "JAAA!", "voice_id": null }
+      ]
+    },
+    {
+      "id": "fruit_v1_s07_almost_caught",
+      "title": "Fruit V1 Shot 7: Fast erwischt",
+      "location_id": null,
+      "characters": ["theo_fruit", "josef_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "The dark office again. Theo and Josef at the 'VADDERS OTT' jar, filling a baggie. Suddenly the front door is heard opening off-screen. Theo and Josef freeze mid-motion, look at each other in total panic and slap both hands on their own heads simultaneously.",
+      "dialogue": [
+        { "character": "vadder_fruit", "line": "Bin da, Akhs!", "voice_id": null },
+        { "character": "josef_fruit", "line": "Das Fenster, Akh!", "voice_id": null }
+      ]
+    },
+    {
+      "id": "fruit_v1_s08_window_jump",
+      "title": "Fruit V1 Shot 8: Fenstersprung",
+      "location_id": null,
+      "characters": ["theo_fruit", "josef_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Exterior shot of the house from the garden, dusk. The office window on the ground floor bursts open, Theo and Josef leap out one after the other, tumble onto the lawn, scramble up and sprint away down the street laughing hysterically, arms flailing. Camera stays static wide, the window swings in the wind.",
+      "dialogue": [
+        { "character": "vadder_fruit", "line": "...Akhs?", "voice_id": null }
+      ]
+    },
+    {
+      "id": "fruit_v1_s09_daniel_repeat",
+      "title": "Fruit V1 Shot 9: Daniel, gleiche Nummer",
+      "location_id": "park",
+      "characters": ["theo_fruit", "daniel_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Text overlay: '2 WOCHEN SPAETER'. A different corner of the park. Theo checks his baggie: empty again. He sighs like a man who knows his destiny, then rides off on an e-scooter at full speed, leaning into the curve like a Formula 1 driver. Daniel waves slowly.",
+      "dialogue": [
+        { "character": "daniel_fruit", "line": "Akh, bau einen.", "voice_id": null },
+        { "character": "theo_fruit", "line": "Warte kurz hier, Akh.", "voice_id": null }
+      ]
+    },
+    {
+      "id": "fruit_v1_s10_the_end",
+      "title": "Fruit V1 Shot 10: Das Ende",
+      "location_id": null,
+      "characters": ["theo_fruit", "vadder_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "The dark office. Theo at the jar, takes a handful, is just stuffing it into his pocket. He turns around and Vadder is standing directly behind him, inches away, appeared out of nowhere, lit from below like a horror movie. Theo flinches violently and screams. Long pause. Vadder squints and exhales slowly.",
+      "dialogue": [
+        { "character": "vadder_fruit", "line": "Du warst das also.... Akh.", "voice_id": null }
+      ]
+    },
+
+    {
+      "id": "fruit_v2_s01_withdrawal",
+      "title": "Fruit V2 Shot 1: Der Entzug",
+      "location_id": null,
+      "characters": ["theo_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Interior attic bedroom with slanted ceiling and skylight, evening light, messy room with clothes everywhere and an overflowing ashtray on the coffee table. Theo lies collapsed on the sofa, visibly suffering: sweating, slightly trembling, pale around the face, dramatic like a fever scene in a war movie. He clutches an empty glass jar labeled 'OTT' to his chest. Slow dramatic push-in on his face.",
+      "dialogue": [
+        { "character": "theo_fruit", "line": "Ich brauch Ott.", "voice_id": null }
+      ]
+    },
+    {
+      "id": "fruit_v2_s02_stairs_run",
+      "title": "Fruit V2 Shot 2: Treppen-Run",
+      "location_id": null,
+      "characters": ["theo_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Theo bursts out of his room and runs down a narrow staircase in a German family home, socks sliding on the wooden steps, camera following handheld from behind, same energy as a heist movie. He sprints through a dim hallway towards the dark wooden office door at the end. Fast, urgent, determined face.",
+      "dialogue": []
+    },
+    {
+      "id": "fruit_v2_s03_the_locks",
+      "title": "Fruit V2 Shot 3: Die Schloesser",
+      "location_id": null,
+      "characters": ["theo_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Theo arrives at the dark wooden office door and freezes. The door is now covered in massive heavy padlocks, thick chains and multiple deadbolts, absurdly over-secured. Slow pan over the locks. Theo's face falls apart in despair, he presses both hands flat onto his face and slowly slides down against the door frame.",
+      "dialogue": []
+    },
+    {
+      "id": "fruit_v2_s04_park_plan",
+      "title": "Fruit V2 Shot 4: Park, der Plan",
+      "location_id": "park",
+      "characters": ["theo_fruit", "josef_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Theo and Josef sit on the backrest of the park bench. Theo stares into the distance, hollow. Beat. Josef exhales. Both nod at each other with sudden determination.",
+      "dialogue": [
+        { "character": "theo_fruit", "line": "Wir haben keinen Ott mehr.", "voice_id": null },
+        { "character": "josef_fruit", "line": "Fuck Bruder.... Egal, lass Ellse.", "voice_id": null }
+      ]
+    },
+    {
+      "id": "fruit_v2_s05_departure",
+      "title": "Fruit V2 Shot 5: Abfahrt",
+      "location_id": "park",
+      "characters": ["theo_fruit", "josef_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Wide static shot of the park. Theo and Josef ride away on two red e-scooters, standing upright, dead serious faces like they are riding into battle. They exit the frame to the right. A few pigeons scatter.",
+      "dialogue": []
+    },
+    {
+      "id": "fruit_v2_s06_arrival_johann",
+      "title": "Fruit V2 Shot 6: Ankunft bei Johann",
+      "location_id": "else",
+      "characters": ["theo_fruit", "josef_fruit", "johann_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Johann sits at the far end of the dark worn wooden table, leaning back extremely relaxed in a black office chair with headrest. The ornate cream paneled door opens and Theo enters with an expectant face, followed by Josef peeking over his shoulder. Johann looks up at them slowly, completely calm.",
+      "dialogue": [
+        { "character": "johann_fruit", "line": "Was geht Zinker, braucht ihr Ott?", "voice_id": null }
+      ]
+    },
+    {
+      "id": "fruit_v2_s07_the_relief",
+      "title": "Fruit V2 Shot 7: Die Erloesung",
+      "location_id": "else",
+      "characters": ["theo_fruit", "josef_fruit", "johann_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Same kitchen room. Theo screams with full desperation. Johann leans back in his black office chair, shrugs, dry delivery. Theo and Josef look at each other and instantly burst into loud crying, tears of pure joy spraying, hugging each other. Johann watches them completely unimpressed.",
+      "dialogue": [
+        { "character": "theo_fruit", "line": "JA! Hast du was?", "voice_id": null },
+        { "character": "johann_fruit", "line": "Normaaal, Bruder.", "voice_id": null }
+      ]
+    },
+    {
+      "id": "fruit_v2_s08_the_call",
+      "title": "Fruit V2 Shot 8: Der Anruf",
+      "location_id": "else",
+      "characters": ["josef_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Same kitchen room, close on Josef. His phone rings loudly, he pulls it out and answers. He looks at the phone, then past the camera, nods once. Hangs up without a word.",
+      "dialogue": [
+        { "character": "max_fruit", "line": "Jo, bin im Park.", "voice_id": null }
+      ]
+    },
+    {
+      "id": "fruit_v2_s09_back_at_park",
+      "title": "Fruit V2 Shot 9: Zurueck im Park",
+      "location_id": "park",
+      "characters": ["theo_fruit", "josef_fruit", "max_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "Theo and Josef arrive on their red e-scooters and roll to a stop. Max is already standing there, tall and thin, smoking a cigarette, unbothered. Wide establishing shot, late afternoon light.",
+      "dialogue": []
+    },
+    {
+      "id": "fruit_v2_s10_bad_news",
+      "title": "Fruit V2 Shot 10: Schlechte Neuigkeiten",
+      "location_id": "park",
+      "characters": ["theo_fruit", "josef_fruit", "max_fruit"],
+      "style": "3D animated comedy short, Pixar-quality render, anthropomorphic fruit characters with arms and legs, expressive cartoon faces, cinematic lighting, shallow depth of field, handheld camera feel, German suburban setting, deadpan humor tone.",
+      "visual_prompt": "The three sit together on and around the park bench. Theo gives Max a casual dap greeting. Max takes a long drag from his cigarette, exhales slowly, looks at both of them, serious. Freeze on Theo's and Josef's worried faces.",
+      "dialogue": [
+        { "character": "theo_fruit", "line": "Was geht.", "voice_id": null },
+        { "character": "max_fruit", "line": "Ich hab schlechte Neuigkeiten.", "voice_id": null }
+      ]
     }
   ]
 }

@@ -2,6 +2,11 @@
   "else": {
     "display_name": "die Else",
     "template_image": null,
-    "description": "recurring apartment room; every in_else shot attaches this image for scene consistency"
+    "description": "A wide German Altbau kitchen room with strikingly high ceilings, black and white checkerboard tile floor, long cream-white IKEA-style kitchen with cluttered black countertop along the left wall (bottles, dishes, spice racks on white tiles), ornate cream paneled door in the back, tall Altbau window with frosted lower glass and a black marble-look windowsill on the right, a small photo calendar beside the window, tall black fridge next to it, a bare lightbulb pendant lamp, a dark worn wooden table crowded with bottles, plates and an ashtray, black and white folding chairs and a black office chair with headrest, very warm dim yellow-amber lighting. No green mop, no beverage crate."
+  },
+  "park": {
+    "display_name": "Der Park (McFitt)",
+    "template_image": null,
+    "description": "A German public park in late afternoon light, a worn park bench on a paved path, patchy grass, in the background a fitness gym building with a big orange logo reading \"McFitt\"."
   }
 }

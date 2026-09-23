@@ -12,6 +12,7 @@ from config.settings import (
     CHARACTERS_FILE,
     LOCATIONS_FILE,
     NEVER_HAPPENS_FILE,
+    PRONUNCIATION_FILE,
     SHOTS_FILE,
     STATE_FILE,
 )
@@ -50,6 +51,37 @@ def load_never_happens():
 
 def load_locations():
     return _read_json(LOCATIONS_FILE)
+
+
+def load_pronunciation():
+    if not PRONUNCIATION_FILE.exists():
+        return {}
+    return _read_json(PRONUNCIATION_FILE)
+
+
+def apply_pronunciation(text):
+    """Rewrites words to their phonetic spelling before TTS (e.g. Else -> Ellse),
+    so English-reading models say them the German way. Whole-word, case-sensitive."""
+    for word, phonetic in load_pronunciation().items():
+        text = re.sub(r"\b" + re.escape(word) + r"\b", phonetic, text)
+    return text
+
+
+def resolve_location(shot):
+    location_id = shot.get("location_id") or ("else" if shot.get("in_else") else None)
+    if not location_id:
+        return None
+    return load_locations().get(location_id)
+
+
+def character_design_blocks(character_ids):
+    characters = load_characters()
+    blocks = []
+    for cid in character_ids:
+        design = characters.get(cid, {}).get("design")
+        if design:
+            blocks.append(design)
+    return " ".join(blocks)
 
 
 def load_state():
