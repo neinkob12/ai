@@ -6,114 +6,202 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <p><a href="{{ url_for('index') }}">&larr; all shots</a></p>
-  <h1>{{ shot.title }} {% if state.locked %}<span class="badge">LOCKED</span>{% endif %}</h1>
-  <p>Characters: {{ shot.characters | join(', ') if shot.characters else '(unset)' }}</p>
-  <p>
-    Location: {{ 'die Else' if shot.in_else else '—' }}
-    {% if shot.in_else and locations.else.template_image %}
-      <br><img class="thumb" src="{{ url_for('assets', filepath=locations.else.template_image) }}" alt="die Else">
-    {% endif %}
-  </p>
+  <div class="page">
+    <a class="back-link" href="{{ url_for('index') }}">&larr; all shots</a>
 
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul class="flash">
-        {% for m in messages %}<li>{{ m }}</li>{% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+    <div class="header-row">
+      <div style="flex:1">
+        <form class="inline-form" method="post" action="{{ url_for('update_title', shot_id=shot.id) }}">
+          <input type="text" name="title" value="{{ shot.title }}" {{ 'disabled' if state.locked else '' }}>
+          <button type="submit" class="secondary" {{ 'disabled' if state.locked else '' }}>Save</button>
+        </form>
+      </div>
+      <form method="post" action="{{ url_for('duplicate_shot', shot_id=shot.id) }}">
+        <button type="submit" class="secondary">Duplicate</button>
+      </form>
+      {% if state.locked %}<span class="pill locked" style="align-self:center">LOCKED</span>{% endif %}
+    </div>
 
-  <section>
-    <h2>Visual prompt</h2>
-    <form method="post" action="{{ url_for('update_prompt', shot_id=shot.id) }}">
-      <textarea name="visual_prompt" rows="3" {{ 'disabled' if state.locked else '' }}>{{ state.working_prompt }}</textarea>
-      <button type="submit" {{ 'disabled' if state.locked else '' }}>Save prompt</button>
-    </form>
-  </section>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash">{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>
+      {% endif %}
+    {% endwith %}
 
-  <section>
-    <h2>Dialogue</h2>
-    {% if not shot.dialogue %}
-      <p>(silent shot, no dialogue)</p>
-    {% else %}
-      {% for entry in state.working_dialogue %}
-        <div class="dialogue-entry">
-          <p>{{ entry.character or '(speaker unset)' }}:</p>
-          <form method="post" action="{{ url_for('update_dialogue', shot_id=shot.id, index=loop.index0) }}">
-            <input type="text" name="line" value="{{ entry.line }}" {{ 'disabled' if state.locked else '' }}>
-            <button type="submit" {{ 'disabled' if state.locked else '' }}>Save line</button>
+    <div class="card">
+      <div class="meta-row">
+        <div class="meta-block">
+          <div class="meta-label">Characters</div>
+          <form method="post" action="{{ url_for('update_characters', shot_id=shot.id) }}" onchange="this.requestSubmit()">
+            <div class="checkbox-list">
+              {% for cid, c in characters.items() %}
+              <label class="checkbox-chip">
+                <input type="checkbox" name="characters" value="{{ cid }}"
+                       {{ 'checked' if cid in shot.characters else '' }}
+                       {{ 'disabled' if state.locked else '' }}>
+                {{ c.display_name }}
+              </label>
+              {% endfor %}
+            </div>
           </form>
         </div>
-      {% endfor %}
-    {% endif %}
-  </section>
-
-  <section>
-    <h2>Voice</h2>
-    {% if not shot.dialogue %}
-      <p>No dialogue on this shot, nothing to voice.</p>
-    {% else %}
-      <form method="post" action="{{ url_for('generate_voice_route', shot_id=shot.id) }}">
-        <button type="submit" {{ 'disabled' if state.locked else '' }}>Generate voice</button>
-      </form>
-      {% for take in state.voice_takes | reverse %}
-        <div class="take {{ 'accepted' if take.version == state.accepted_voice else '' }}">
-          <p>v{{ take.version }} {{ '(accepted)' if take.version == state.accepted_voice else '' }} &mdash; &quot;{{ take.text_used }}&quot;</p>
-          <audio controls src="{{ url_for('media', filepath=take.path) }}"></audio>
-          {% if take.version != state.accepted_voice and not state.locked %}
-          <form method="post" action="{{ url_for('accept_voice', shot_id=shot.id, version=take.version) }}">
-            <button type="submit">Accept this take</button>
+        <div class="meta-block">
+          <div class="meta-label">Location</div>
+          <form method="post" action="{{ url_for('update_in_else', shot_id=shot.id) }}" onchange="this.requestSubmit()">
+            <label class="switch-row">
+              <input type="checkbox" name="in_else" value="1"
+                     {{ 'checked' if shot.in_else else '' }}
+                     {{ 'disabled' if state.locked else '' }}>
+              In die Else
+            </label>
           </form>
+          {% if shot.in_else and locations.else.template_image %}
+            <img class="thumb" src="{{ url_for('assets', filepath=locations.else.template_image) }}" alt="die Else">
+          {% endif %}
+        </div>
+        <div class="meta-block">
+          <div class="meta-label">Style override</div>
+          <form class="inline-form" method="post" action="{{ url_for('update_style', shot_id=shot.id) }}">
+            <input type="text" name="style" value="{{ shot.style or '' }}"
+                   placeholder="Default PS2 house style" {{ 'disabled' if state.locked else '' }}>
+            <button type="submit" class="secondary" {{ 'disabled' if state.locked else '' }}>Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Visual prompt</h2>
+      <form method="post" action="{{ url_for('update_prompt', shot_id=shot.id) }}">
+        <textarea name="visual_prompt" rows="3" {{ 'disabled' if state.locked else '' }}>{{ state.working_prompt }}</textarea>
+        <div style="margin-top:0.6rem"><button type="submit" {{ 'disabled' if state.locked else '' }}>Save prompt</button></div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Dialogue</h2>
+      {% if not shot.dialogue %}
+        <p style="color:var(--text-secondary)">Silent shot, no dialogue.</p>
+      {% else %}
+        {% for entry in state.working_dialogue %}
+          <div class="dialogue-entry">
+            <span class="speaker">{{ entry.character or '(speaker unset)' }}</span>
+            <form class="inline-form" method="post" action="{{ url_for('update_dialogue', shot_id=shot.id, index=loop.index0) }}">
+              <input type="text" name="line" value="{{ entry.line }}" {{ 'disabled' if state.locked else '' }}>
+              <button type="submit" class="secondary" {{ 'disabled' if state.locked else '' }}>Save</button>
+            </form>
+            <form method="post" action="{{ url_for('remove_dialogue', shot_id=shot.id, index=loop.index0) }}"
+                  onsubmit="return confirm('Remove this line?');">
+              <button type="submit" class="danger small" {{ 'disabled' if state.locked else '' }}>Remove</button>
+            </form>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <form class="inline-form" method="post" action="{{ url_for('add_dialogue', shot_id=shot.id) }}" style="margin-top:0.6rem">
+        <select name="character" {{ 'disabled' if state.locked else '' }}>
+          <option value="">(speaker unset)</option>
+          {% for cid, c in characters.items() %}
+          <option value="{{ cid }}">{{ c.display_name }}</option>
+          {% endfor %}
+        </select>
+        <input type="text" name="line" placeholder="New line&hellip;" {{ 'disabled' if state.locked else '' }}>
+        <button type="submit" class="secondary" {{ 'disabled' if state.locked else '' }}>Add line</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Voice</h2>
+      {% if not shot.dialogue %}
+        <p style="color:var(--text-secondary)">No dialogue on this shot, nothing to voice.</p>
+      {% else %}
+        <form method="post" action="{{ url_for('generate_voice_route', shot_id=shot.id) }}">
+          <button type="submit" {{ 'disabled' if state.locked else '' }}>Generate voice</button>
+        </form>
+        {% for take in state.voice_takes | reverse %}
+          <div class="take {{ 'accepted' if take.version == state.accepted_voice else '' }}">
+            <p class="take-meta">v{{ take.version }}{{ ' (accepted)' if take.version == state.accepted_voice else '' }}: &quot;{{ take.text_used }}&quot;</p>
+            <audio controls src="{{ url_for('media', filepath=take.path) }}"></audio>
+            {% if not state.locked %}
+            <div class="take-actions">
+              {% if take.version != state.accepted_voice %}
+              <form method="post" action="{{ url_for('accept_voice', shot_id=shot.id, version=take.version) }}">
+                <button type="submit" class="secondary small">Accept this take</button>
+              </form>
+              {% endif %}
+              <form method="post" action="{{ url_for('delete_voice_take', shot_id=shot.id, version=take.version) }}"
+                    onsubmit="return confirm('Delete this take? The file stays on disk, just removed from the list.');">
+                <button type="submit" class="danger small">Delete</button>
+              </form>
+            </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <h2>Video</h2>
+      <form method="post" action="{{ url_for('generate_video_route', shot_id=shot.id) }}">
+        <button type="submit" {{ 'disabled' if state.locked else '' }}>Generate video</button>
+      </form>
+      {% for take in state.video_takes | reverse %}
+        <div class="take {{ 'accepted' if take.version == state.accepted_video else '' }}">
+          <p class="take-meta">v{{ take.version }}{{ ' (accepted)' if take.version == state.accepted_video else '' }}</p>
+          <video controls src="{{ url_for('media', filepath=take.path) }}"></video>
+          {% if not state.locked %}
+          <div class="take-actions">
+            {% if take.version != state.accepted_video %}
+            <form method="post" action="{{ url_for('accept_video', shot_id=shot.id, version=take.version) }}">
+              <button type="submit" class="secondary small">Accept this take</button>
+            </form>
+            {% endif %}
+            <form method="post" action="{{ url_for('delete_video_take', shot_id=shot.id, version=take.version) }}"
+                  onsubmit="return confirm('Delete this take? The file stays on disk, just removed from the list.');">
+              <button type="submit" class="danger small">Delete</button>
+            </form>
+          </div>
           {% endif %}
         </div>
       {% endfor %}
-    {% endif %}
-  </section>
+    </div>
 
-  <section>
-    <h2>Video</h2>
-    <form method="post" action="{{ url_for('generate_video_route', shot_id=shot.id) }}">
-      <button type="submit" {{ 'disabled' if state.locked else '' }}>Generate video</button>
-    </form>
-    {% for take in state.video_takes | reverse %}
-      <div class="take {{ 'accepted' if take.version == state.accepted_video else '' }}">
-        <p>v{{ take.version }} {{ '(accepted)' if take.version == state.accepted_video else '' }}</p>
-        <video controls width="360" src="{{ url_for('media', filepath=take.path) }}"></video>
-        {% if take.version != state.accepted_video and not state.locked %}
-        <form method="post" action="{{ url_for('accept_video', shot_id=shot.id, version=take.version) }}">
-          <button type="submit">Accept this take</button>
+    <div class="card">
+      <h2>Lipsync</h2>
+      {% if not lipsync_eligible %}
+        <p style="color:var(--text-secondary)">Not available: lipsync only runs on shots with exactly one dialogue line.</p>
+      {% elif not state.accepted_voice or not state.accepted_video %}
+        <p style="color:var(--text-secondary)">Accept a voice take and a video take first.</p>
+      {% else %}
+        <form method="post" action="{{ url_for('generate_lipsync_route', shot_id=shot.id) }}">
+          <button type="submit" {{ 'disabled' if state.locked else '' }}>{{ 'Regenerate' if state.lipsync_output else 'Generate' }} lipsync</button>
         </form>
+        {% if state.lipsync_output %}
+          <video controls src="{{ url_for('media', filepath=state.lipsync_output) }}" style="margin-top:0.6rem"></video>
         {% endif %}
-      </div>
-    {% endfor %}
-  </section>
-
-  <section>
-    <h2>Lipsync</h2>
-    {% if not lipsync_eligible %}
-      <p>Not available: lipsync only runs on shots with exactly one dialogue line.</p>
-    {% elif not state.accepted_voice or not state.accepted_video %}
-      <p>Accept a voice take and a video take first.</p>
-    {% else %}
-      <form method="post" action="{{ url_for('generate_lipsync_route', shot_id=shot.id) }}">
-        <button type="submit" {{ 'disabled' if state.locked else '' }}>{{ 'Regenerate' if state.lipsync_output else 'Generate' }} lipsync</button>
-      </form>
-      {% if state.lipsync_output %}
-        <video controls width="360" src="{{ url_for('media', filepath=state.lipsync_output) }}"></video>
       {% endif %}
-    {% endif %}
-  </section>
+    </div>
 
-  <section>
-    <h2>Lock</h2>
-    {% if state.locked %}
-      <p>This shot is locked.</p>
-    {% else %}
-      <form method="post" action="{{ url_for('lock', shot_id=shot.id) }}">
-        <button type="submit">Lock shot</button>
+    <div class="card">
+      <h2>Lock</h2>
+      {% if state.locked %}
+        <p style="color:var(--text-secondary)">This shot is locked.</p>
+        <form method="post" action="{{ url_for('unlock', shot_id=shot.id) }}">
+          <button type="submit" class="secondary">Unlock</button>
+        </form>
+      {% else %}
+        <form method="post" action="{{ url_for('lock', shot_id=shot.id) }}">
+          <button type="submit">Lock shot</button>
+        </form>
+      {% endif %}
+    </div>
+
+    <div class="card danger-zone">
+      <h2>Danger zone</h2>
+      <form method="post" action="{{ url_for('delete_shot', shot_id=shot.id) }}"
+            onsubmit="return confirm('Delete \'{{ shot.title }}\'? This removes it from the config, generated files on disk are kept.');">
+        <button type="submit" class="danger">Delete this shot</button>
       </form>
-    {% endif %}
-  </section>
+    </div>
+  </div>
 </body>
 </html>

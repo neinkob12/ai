@@ -59,8 +59,58 @@ def shot_detail(shot_id):
         shot=shot,
         state=state,
         locations=store.load_locations(),
+        characters=store.load_characters(),
         lipsync_eligible=lipsync_eligible,
     )
+
+
+@app.route("/shot/new", methods=["POST"])
+def new_shot():
+    title = request.form.get("title", "").strip()
+    if not title:
+        flash("Give the new shot a title.")
+        return redirect(url_for("index"))
+    shot_id = store.create_shot(title)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/delete", methods=["POST"])
+def delete_shot(shot_id):
+    store.delete_shot(shot_id)
+    flash(f'Deleted "{shot_id}".')
+    return redirect(url_for("index"))
+
+
+@app.route("/shot/<shot_id>/title", methods=["POST"])
+def update_title(shot_id):
+    title = request.form.get("title", "").strip()
+    if title:
+        store.update_shot_title(shot_id, title)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/characters", methods=["POST"])
+def update_characters(shot_id):
+    store.update_shot_characters(shot_id, request.form.getlist("characters"))
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/in_else", methods=["POST"])
+def update_in_else(shot_id):
+    store.update_shot_in_else(shot_id, "in_else" in request.form)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/style", methods=["POST"])
+def update_style(shot_id):
+    store.update_shot_style(shot_id, request.form.get("style", "").strip())
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/unlock", methods=["POST"])
+def unlock(shot_id):
+    store.unlock_shot(shot_id)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
 
 
 @app.route("/shot/<shot_id>/prompt", methods=["POST"])
@@ -73,6 +123,37 @@ def update_prompt(shot_id):
 def update_dialogue(shot_id, index):
     store.update_working_dialogue_line(shot_id, index, request.form["line"])
     return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/dialogue/add", methods=["POST"])
+def add_dialogue(shot_id):
+    character = request.form.get("character") or None
+    line = request.form.get("line", "").strip()
+    if not line:
+        flash("Dialogue line can't be empty.")
+        return redirect(url_for("shot_detail", shot_id=shot_id))
+    store.add_dialogue_line(shot_id, character, line)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/dialogue/<int:index>/remove", methods=["POST"])
+def remove_dialogue(shot_id, index):
+    store.remove_dialogue_line(shot_id, index)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/duplicate", methods=["POST"])
+def duplicate_shot(shot_id):
+    new_id = store.duplicate_shot(shot_id)
+    if new_id is None:
+        abort(404)
+    return redirect(url_for("shot_detail", shot_id=new_id))
+
+
+@app.route("/shot/<shot_id>/move/<direction>", methods=["POST"])
+def move_shot(shot_id, direction):
+    store.move_shot(shot_id, direction)
+    return redirect(url_for("index"))
 
 
 @app.route("/shot/<shot_id>/voice/generate", methods=["POST"])
@@ -112,11 +193,17 @@ def accept_voice(shot_id, version):
     return redirect(url_for("shot_detail", shot_id=shot_id))
 
 
+@app.route("/shot/<shot_id>/voice/delete/<int:version>", methods=["POST"])
+def delete_voice_take(shot_id, version):
+    store.delete_voice_take(shot_id, version)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
 @app.route("/shot/<shot_id>/video/generate", methods=["POST"])
 def generate_video_route(shot_id):
     data = store.get_shot_state(shot_id)
     shot, state = data["shot"], data["state"]
-    prompt = pipeline.build_video_prompt(state["working_prompt"])
+    prompt = pipeline.build_video_prompt(state["working_prompt"], shot.get("style"))
 
     image_url = None
     if shot.get("in_else"):
@@ -146,6 +233,12 @@ def generate_video_route(shot_id):
 @app.route("/shot/<shot_id>/video/accept/<int:version>", methods=["POST"])
 def accept_video(shot_id, version):
     store.accept_video_take(shot_id, version)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/video/delete/<int:version>", methods=["POST"])
+def delete_video_take(shot_id, version):
+    store.delete_video_take(shot_id, version)
     return redirect(url_for("shot_detail", shot_id=shot_id))
 
 
@@ -191,6 +284,28 @@ def lock(shot_id):
         return redirect(url_for("shot_detail", shot_id=shot_id))
     store.lock_shot(shot_id)
     return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/submit", methods=["GET", "POST"])
+def submit():
+    if request.method == "POST":
+        title = request.form.get("title", "").strip()
+        visual_prompt = request.form.get("visual_prompt", "").strip()
+        characters = request.form.getlist("characters")
+        in_else = "in_else" in request.form
+        style = request.form.get("style", "").strip() or None
+
+        if not title or not visual_prompt:
+            flash("Give it a title and a description before submitting.")
+            return redirect(url_for("submit"))
+
+        shot_id = store.create_shot(
+            title, visual_prompt=visual_prompt, characters=characters,
+            in_else=in_else, style=style,
+        )
+        return render_template("submit_thanks.html", shot_id=shot_id, title=title)
+
+    return render_template("submit.html", characters=store.load_characters())
 
 
 @app.route("/media/<path:filepath>")

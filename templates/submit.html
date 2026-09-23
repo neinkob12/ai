@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Submit a clip idea</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="submit-body">
+  <div class="submit-progress"><div class="submit-progress-bar" id="progressBar"></div></div>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flash" style="position:fixed; top:1.5rem; left:50%; transform:translateX(-50%); z-index:20;">
+        {% for m in messages %}<li>{{ m }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <form method="post" action="{{ url_for('submit') }}" class="submit-form" id="submitForm">
+
+    <div class="submit-step is-active" data-step="0">
+      <div class="submit-step-inner">
+        <p class="submit-eyebrow">Step 1 of 6</p>
+        <h1 class="submit-question">What's the idea called?</h1>
+        <input type="text" name="title" class="submit-input" placeholder="e.g. Josef says something weird" required autofocus>
+        <div class="submit-nav">
+          <span></span>
+          <button type="button" class="submit-next">Continue &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-step" data-step="1">
+      <div class="submit-step-inner">
+        <p class="submit-eyebrow">Step 2 of 6</p>
+        <h1 class="submit-question">What happens? Set the vibe.</h1>
+        <p class="submit-hint">Describe the scene in plain language, no need to write a polished prompt.</p>
+        <textarea name="visual_prompt" class="submit-input submit-textarea" rows="4"
+                  placeholder="e.g. Everyone's dead silent, staring at their phones, faint music in the background" required></textarea>
+        <div class="submit-nav">
+          <button type="button" class="submit-back">&larr; Back</button>
+          <button type="button" class="submit-next">Continue &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-step" data-step="2">
+      <div class="submit-step-inner">
+        <p class="submit-eyebrow">Step 3 of 6</p>
+        <h1 class="submit-question">Who's in it?</h1>
+        <p class="submit-hint">Leave it blank if you're not sure yet.</p>
+        <div class="submit-checkbox-grid">
+          {% for cid, c in characters.items() %}
+          <label class="submit-checkbox-card">
+            <input type="checkbox" name="characters" value="{{ cid }}">
+            {{ c.display_name }}
+          </label>
+          {% endfor %}
+        </div>
+        <div class="submit-nav">
+          <button type="button" class="submit-back">&larr; Back</button>
+          <button type="button" class="submit-next">Continue &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-step" data-step="3">
+      <div class="submit-step-inner">
+        <p class="submit-eyebrow">Step 4 of 6</p>
+        <h1 class="submit-question">Where's it set?</h1>
+        <label class="submit-toggle-card">
+          <input type="checkbox" name="in_else" value="1" checked>
+          In die Else
+        </label>
+        <p class="submit-hint">Other locations aren't wired up yet, this is the only setting for now.</p>
+        <div class="submit-nav">
+          <button type="button" class="submit-back">&larr; Back</button>
+          <button type="button" class="submit-next">Continue &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-step" data-step="4">
+      <div class="submit-step-inner">
+        <p class="submit-eyebrow">Step 5 of 6</p>
+        <h1 class="submit-question">Any style override?</h1>
+        <p class="submit-hint">Leave this blank to use the house PS2 style. Only fill it in if this specific idea needs a different visual style entirely.</p>
+        <input type="text" name="style" class="submit-input" placeholder="Optional, leave blank for the default look">
+        <div class="submit-nav">
+          <button type="button" class="submit-back">&larr; Back</button>
+          <button type="button" class="submit-next">Continue &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-step" data-step="5">
+      <div class="submit-step-inner">
+        <p class="submit-eyebrow">Step 6 of 6</p>
+        <h1 class="submit-question">Ready to send it in?</h1>
+        <p class="submit-hint">It'll show up in the review queue. Nothing gets generated yet, that happens later in the full editor.</p>
+        <div class="submit-nav">
+          <button type="button" class="submit-back">&larr; Back</button>
+          <button type="submit" class="submit-submit">Submit idea</button>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  <script>
+    (function () {
+      var steps = Array.prototype.slice.call(document.querySelectorAll('.submit-step'));
+      var progressBar = document.getElementById('progressBar');
+      var current = 0;
+
+      function show(index) {
+        steps.forEach(function (step, i) {
+          step.classList.toggle('is-active', i === index);
+        });
+        progressBar.style.width = (index / (steps.length - 1) * 100) + '%';
+        current = index;
+        var focusable = steps[index].querySelector('input, textarea');
+        if (focusable) focusable.focus();
+      }
+
+      function currentStepValid() {
+        var inputs = steps[current].querySelectorAll('input[required], textarea[required]');
+        for (var i = 0; i < inputs.length; i++) {
+          if (!inputs[i].reportValidity()) return false;
+        }
+        return true;
+      }
+
+      document.querySelectorAll('.submit-next').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (!currentStepValid()) return;
+          if (current < steps.length - 1) show(current + 1);
+        });
+      });
+
+      document.querySelectorAll('.submit-back').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (current > 0) show(current - 1);
+        });
+      });
+
+      show(0);
+    })();
+  </script>
+</body>
+</html>

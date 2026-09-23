@@ -6,30 +6,55 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h1>Else Clips</h1>
+  <div class="page">
+    <div class="header-row">
+      <div>
+        <h1>Else Clips</h1>
+        <p class="subtitle">{{ shots|length }} shots</p>
+      </div>
+      <a class="btn" href="{{ url_for('submit') }}">Submit an idea</a>
+    </div>
 
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul class="flash">
-        {% for m in messages %}<li>{{ m }}</li>{% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash">{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>
+      {% endif %}
+    {% endwith %}
 
-  <table>
-    <thead>
-      <tr><th>Shot</th><th>Voice</th><th>Video</th><th>Status</th></tr>
-    </thead>
-    <tbody>
+    <div class="card new-shot-card">
+      <form class="inline-form" method="post" action="{{ url_for('new_shot') }}">
+        <input type="text" name="title" placeholder="New shot title&hellip;" required>
+        <button type="submit">Add shot</button>
+      </form>
+    </div>
+
+    <div class="shot-grid">
       {% for shot in shots %}
-      <tr class="{{ 'locked' if shot.locked else '' }}">
-        <td><a href="{{ url_for('shot_detail', shot_id=shot.id) }}">{{ shot.title }}</a></td>
-        <td>{{ ('accepted v' ~ shot.accepted_voice) if shot.accepted_voice else '—' }}</td>
-        <td>{{ ('accepted v' ~ shot.accepted_video) if shot.accepted_video else '—' }}</td>
-        <td>{{ 'locked' if shot.locked else 'open' }}</td>
-      </tr>
+      <div class="shot-card {{ 'locked' if shot.locked else '' }}">
+        <div class="shot-card-title"><a href="{{ url_for('shot_detail', shot_id=shot.id) }}">{{ shot.title }}</a></div>
+        <div class="shot-card-status">
+          {% if shot.locked %}<span class="pill locked">Locked</span>{% endif %}
+          <span class="pill {{ 'done' if shot.accepted_voice else '' }}">Voice {{ 'v' ~ shot.accepted_voice if shot.accepted_voice else '—' }}</span>
+          <span class="pill {{ 'done' if shot.accepted_video else '' }}">Video {{ 'v' ~ shot.accepted_video if shot.accepted_video else '—' }}</span>
+        </div>
+        <div class="shot-card-footer">
+          <form method="post" action="{{ url_for('move_shot', shot_id=shot.id, direction='up') }}">
+            <button type="submit" class="secondary small" title="Move up" {{ 'disabled' if loop.first else '' }}>&uarr;</button>
+          </form>
+          <form method="post" action="{{ url_for('move_shot', shot_id=shot.id, direction='down') }}">
+            <button type="submit" class="secondary small" title="Move down" {{ 'disabled' if loop.last else '' }}>&darr;</button>
+          </form>
+          <form method="post" action="{{ url_for('duplicate_shot', shot_id=shot.id) }}">
+            <button type="submit" class="secondary small">Duplicate</button>
+          </form>
+          <form method="post" action="{{ url_for('delete_shot', shot_id=shot.id) }}"
+                onsubmit="return confirm('Delete \'{{ shot.title }}\'? This removes it from the config, generated files on disk are kept.');">
+            <button type="submit" class="danger small">Delete</button>
+          </form>
+        </div>
+      </div>
       {% endfor %}
-    </tbody>
-  </table>
+    </div>
+  </div>
 </body>
 </html>
