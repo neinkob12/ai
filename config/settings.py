@@ -10,6 +10,7 @@ SHOTS_FILE = CONFIG_DIR / "shots.json"
 CHARACTERS_FILE = CONFIG_DIR / "characters.json"
 NEVER_HAPPENS_FILE = CONFIG_DIR / "never_happens.json"
 LOCATIONS_FILE = CONFIG_DIR / "locations.json"
+PRONUNCIATION_FILE = CONFIG_DIR / "pronunciation.json"
 STATE_FILE = STATE_DIR / "shots_state.json"
 
 ART_STYLE_BLOCK = (

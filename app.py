@@ -172,17 +172,18 @@ def generate_voice_route(shot_id):
               "characters.json, or as a per-line override.")
         return redirect(url_for("shot_detail", shot_id=shot_id))
 
+    spoken_line = store.apply_pronunciation(entry["line"])
     out_dir = _shot_output_dir(shot_id, "voice")
     version = len(state["voice_takes"]) + 1
     out_path = out_dir / f"v{version}.mp3"
     try:
-        pipeline.generate_voice(entry["line"], voice_id, str(out_path))
+        pipeline.generate_voice(spoken_line, voice_id, str(out_path))
     except Exception as e:
         flash(f"Voice generation failed: {e}")
         return redirect(url_for("shot_detail", shot_id=shot_id))
 
     store.add_voice_take(
-        shot_id, _relative_to_output(out_path), entry["line"], voice_id, entry.get("character")
+        shot_id, _relative_to_output(out_path), spoken_line, voice_id, entry.get("character")
     )
     return redirect(url_for("shot_detail", shot_id=shot_id))
 
@@ -203,18 +204,23 @@ def delete_voice_take(shot_id, version):
 def generate_video_route(shot_id):
     data = store.get_shot_state(shot_id)
     shot, state = data["shot"], data["state"]
-    prompt = pipeline.build_video_prompt(state["working_prompt"], shot.get("style"))
+
+    location = store.resolve_location(shot)
+    character_descriptions = store.character_design_blocks(shot.get("characters", []))
 
     image_url = None
-    if shot.get("in_else"):
-        template_image = store.load_locations().get("else", {}).get("template_image")
-        if template_image:
-            image_path = ASSETS_DIR / template_image
-            if image_path.exists():
-                try:
-                    image_url = pipeline.upload_local_file(str(image_path))
-                except Exception as e:
-                    flash(f"Could not upload Else reference image, generating without it: {e}")
+    if location and location.get("template_image"):
+        image_path = ASSETS_DIR / location["template_image"]
+        if image_path.exists():
+            try:
+                image_url = pipeline.upload_local_file(str(image_path))
+            except Exception as e:
+                flash(f"Could not upload location reference image, generating without it: {e}")
+
+    location_description = None if image_url else (location.get("description") if location else None)
+    prompt = pipeline.build_video_prompt(
+        state["working_prompt"], shot.get("style"), location_description, character_descriptions
+    )
 
     try:
         video_url = pipeline.generate_video(prompt, image_url=image_url)

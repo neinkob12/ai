@@ -4,6 +4,43 @@
     "daniel":  { "display_name": "Daniel",  "voice_id": "", "reference_image": null },
     "philipp": { "display_name": "Philipp", "voice_id": "", "reference_image": null },
     "theo":    { "display_name": "Theo",    "voice_id": "", "reference_image": null },
-    "laurenz": { "display_name": "Laurenz", "voice_id": "QEY8DO1J7NiJXsE56qZ8", "reference_image": null }
+    "laurenz": { "display_name": "Laurenz", "voice_id": "QEY8DO1J7NiJXsE56qZ8", "reference_image": null },
+
+    "theo_fruit": {
+      "display_name": "Theo (Banane)",
+      "voice_id": "",
+      "reference_image": null,
+      "design": "Theo, an anthropomorphic banana, 18 years old, slim build but clean streetwear fit: boxy black designer tee and matching pants, short curly hair almost like a loose perm, juicy confident smile with slightly lowered eyebrows, silver chain necklace with \"THEO\" pendant."
+    },
+    "josef_fruit": {
+      "display_name": "Josef (Wassermelone)",
+      "voice_id": "",
+      "reference_image": null,
+      "design": "Josef, an anthropomorphic watermelon, lean athletic build with visible muscle definition, dark green striped rind, grey sweatpants and a fitted black tank top, black glasses with a piece of tape in the middle, short brown hair, thin moustache, silver chain necklace with \"JOSEF\" pendant."
+    },
+    "daniel_fruit": {
+      "display_name": "Daniel (Aubergine)",
+      "voice_id": "",
+      "reference_image": null,
+      "design": "Daniel, an anthropomorphic eggplant, 18 years old, slightly Arab-looking features, small moustache, cute warm smile, orange watch on his right wrist, gold chain necklace with \"DANIEL\" pendant."
+    },
+    "johann_fruit": {
+      "display_name": "Johann (Weintraube)",
+      "voice_id": "",
+      "reference_image": null,
+      "design": "Johann, an anthropomorphic green grape, sits very relaxed, black glasses, middle-parted hair reaching down to his ears on both sides, very thin light moustache, gold chain necklace with \"JOHANN\" pendant, t-shirt with an esports team logo on the chest, black chill sweatpants with subtle red accents."
+    },
+    "max_fruit": {
+      "display_name": "Max (Stangenbohne)",
+      "voice_id": "",
+      "reference_image": null,
+      "design": "Max, an anthropomorphic green pole bean, tall and thin, red and white football jersey, grey very tight-fitting sweatpants, brown designer belt with a repeating monogram pattern, small chin beard, very short spiky hair pointing upwards, a lit cigarette in his hand at all times."
+    },
+    "vadder_fruit": {
+      "display_name": "Vadder (alte Banane)",
+      "voice_id": "",
+      "reference_image": null,
+      "design": "Vadder, an anthropomorphic banana aged 50 to 60, looks like an older version of Theo, slightly browning peel, tired eyes, mischievous grin, wearing a worn-out cardigan."
+    }
   }
 }
