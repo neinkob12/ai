@@ -59,8 +59,52 @@ def shot_detail(shot_id):
         shot=shot,
         state=state,
         locations=store.load_locations(),
+        characters=store.load_characters(),
         lipsync_eligible=lipsync_eligible,
     )
+
+
+@app.route("/shot/new", methods=["POST"])
+def new_shot():
+    title = request.form.get("title", "").strip()
+    if not title:
+        flash("Give the new shot a title.")
+        return redirect(url_for("index"))
+    shot_id = store.create_shot(title)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/delete", methods=["POST"])
+def delete_shot(shot_id):
+    store.delete_shot(shot_id)
+    flash(f'Deleted "{shot_id}".')
+    return redirect(url_for("index"))
+
+
+@app.route("/shot/<shot_id>/title", methods=["POST"])
+def update_title(shot_id):
+    title = request.form.get("title", "").strip()
+    if title:
+        store.update_shot_title(shot_id, title)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/characters", methods=["POST"])
+def update_characters(shot_id):
+    store.update_shot_characters(shot_id, request.form.getlist("characters"))
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/in_else", methods=["POST"])
+def update_in_else(shot_id):
+    store.update_shot_in_else(shot_id, "in_else" in request.form)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/unlock", methods=["POST"])
+def unlock(shot_id):
+    store.unlock_shot(shot_id)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
 
 
 @app.route("/shot/<shot_id>/prompt", methods=["POST"])

@@ -1,9 +1,12 @@
 """
-Config/state I/O. config/*.json is hand-curated and never rewritten by this
-module. state/shots_state.json is the only file that gets mutated, and it
-references shots by id rather than copying their content.
+Config/state I/O. config/shots.json is treated as curated data the UI is
+allowed to manage directly (title, characters, location, existence), since
+those are structural properties with no "takes" or "versions". Generation
+iteration (working prompt/dialogue, takes, accepted/locked) lives only in
+state/shots_state.json, which references shots by id.
 """
 import json
+import re
 
 from config.settings import (
     CHARACTERS_FILE,
@@ -154,3 +157,75 @@ def lock_shot(shot_id):
     state = load_state()
     state[shot_id]["locked"] = True
     save_state(state)
+
+
+def unlock_shot(shot_id):
+    state = load_state()
+    state[shot_id]["locked"] = False
+    save_state(state)
+
+
+def save_shots(shots):
+    _write_json(SHOTS_FILE, {"shots": shots})
+
+
+def _slugify(title):
+    slug = re.sub(r"[^a-z0-9]+", "_", title.strip().lower()).strip("_")
+    return slug or "shot"
+
+
+def create_shot(title):
+    shots = load_shots()
+    existing_ids = {s["id"] for s in shots}
+    base = _slugify(title)
+    shot_id = base
+    n = 2
+    while shot_id in existing_ids:
+        shot_id = f"{base}_{n}"
+        n += 1
+    shots.append({
+        "id": shot_id,
+        "title": title,
+        "in_else": True,
+        "characters": [],
+        "visual_prompt": "",
+        "dialogue": [],
+    })
+    save_shots(shots)
+    return shot_id
+
+
+def delete_shot(shot_id):
+    shots = [s for s in load_shots() if s["id"] != shot_id]
+    save_shots(shots)
+    state = load_state()
+    if shot_id in state:
+        del state[shot_id]
+        save_state(state)
+
+
+def update_shot_title(shot_id, title):
+    shots = load_shots()
+    for s in shots:
+        if s["id"] == shot_id:
+            s["title"] = title
+            break
+    save_shots(shots)
+
+
+def update_shot_characters(shot_id, characters):
+    shots = load_shots()
+    for s in shots:
+        if s["id"] == shot_id:
+            s["characters"] = characters
+            break
+    save_shots(shots)
+
+
+def update_shot_in_else(shot_id, in_else):
+    shots = load_shots()
+    for s in shots:
+        if s["id"] == shot_id:
+            s["in_else"] = in_else
+            break
+    save_shots(shots)
