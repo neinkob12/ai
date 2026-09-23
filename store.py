@@ -229,3 +229,85 @@ def update_shot_in_else(shot_id, in_else):
             s["in_else"] = in_else
             break
     save_shots(shots)
+
+
+def duplicate_shot(shot_id):
+    shot = load_shot(shot_id)
+    if shot is None:
+        return None
+    shots = load_shots()
+    existing_ids = {s["id"] for s in shots}
+    base = _slugify(shot["title"] + " copy")
+    new_id = base
+    n = 2
+    while new_id in existing_ids:
+        new_id = f"{base}_{n}"
+        n += 1
+    new_shot = {
+        "id": new_id,
+        "title": f"{shot['title']} (copy)",
+        "in_else": shot["in_else"],
+        "characters": list(shot["characters"]),
+        "visual_prompt": shot["visual_prompt"],
+        "dialogue": [dict(d) for d in shot["dialogue"]],
+    }
+    shots.append(new_shot)
+    save_shots(shots)
+    return new_id
+
+
+def move_shot(shot_id, direction):
+    shots = load_shots()
+    idx = next((i for i, s in enumerate(shots) if s["id"] == shot_id), None)
+    if idx is None:
+        return
+    if direction == "up" and idx > 0:
+        shots[idx - 1], shots[idx] = shots[idx], shots[idx - 1]
+    elif direction == "down" and idx < len(shots) - 1:
+        shots[idx + 1], shots[idx] = shots[idx], shots[idx + 1]
+    save_shots(shots)
+
+
+def add_dialogue_line(shot_id, character, line):
+    entry = {"character": character or None, "line": line, "voice_id": None}
+    shots = load_shots()
+    for s in shots:
+        if s["id"] == shot_id:
+            s["dialogue"].append(dict(entry))
+            break
+    save_shots(shots)
+    state = load_state()
+    if shot_id in state:
+        state[shot_id]["working_dialogue"].append(dict(entry))
+        save_state(state)
+
+
+def remove_dialogue_line(shot_id, index):
+    shots = load_shots()
+    for s in shots:
+        if s["id"] == shot_id and 0 <= index < len(s["dialogue"]):
+            del s["dialogue"][index]
+            break
+    save_shots(shots)
+    state = load_state()
+    if shot_id in state and 0 <= index < len(state[shot_id]["working_dialogue"]):
+        del state[shot_id]["working_dialogue"][index]
+        save_state(state)
+
+
+def delete_voice_take(shot_id, version):
+    state = load_state()
+    s = state[shot_id]
+    s["voice_takes"] = [t for t in s["voice_takes"] if t["version"] != version]
+    if s["accepted_voice"] == version:
+        s["accepted_voice"] = None
+    save_state(state)
+
+
+def delete_video_take(shot_id, version):
+    state = load_state()
+    s = state[shot_id]
+    s["video_takes"] = [t for t in s["video_takes"] if t["version"] != version]
+    if s["accepted_video"] == version:
+        s["accepted_video"] = None
+    save_state(state)

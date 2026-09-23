@@ -116,6 +116,17 @@ textarea:focus, input[type=text]:focus {
 }
 textarea:disabled, input:disabled { color: var(--text-secondary); background: #f0f0f2; }
 
+select {
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: #fafafa;
+  color: var(--text);
+}
+select:disabled { color: var(--text-secondary); background: #f0f0f2; }
+
 /* Index: shot grid */
 .new-shot-card { margin-bottom: 1.5rem; }
 
@@ -138,7 +149,7 @@ textarea:disabled, input:disabled { color: var(--text-secondary); background: #f
 .shot-card-title { font-weight: 600; font-size: 1rem; }
 .shot-card-title a { color: var(--text); }
 .shot-card-status { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-.shot-card-footer { display: flex; justify-content: flex-end; margin-top: auto; }
+.shot-card-footer { display: flex; justify-content: flex-end; gap: 0.4rem; flex-wrap: wrap; margin-top: auto; }
 
 /* Pills */
 .pill {
@@ -181,6 +192,7 @@ textarea:disabled, input:disabled { color: var(--text-secondary); background: #f
 .take.accepted { border-color: var(--success); background: var(--success-bg); }
 .take-meta { font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 0.4rem; }
 .take audio, .take video { width: 100%; max-width: 360px; display: block; margin-bottom: 0.5rem; border-radius: var(--radius-sm); }
+.take-actions { display: flex; gap: 0.5rem; }
 
 .dialogue-entry { margin-bottom: 0.6rem; display: flex; gap: 0.6rem; align-items: center; }
 .dialogue-entry .speaker { min-width: 90px; color: var(--text-secondary); font-size: 0.85rem; }

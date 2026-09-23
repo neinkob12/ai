@@ -16,6 +16,9 @@
           <button type="submit" class="secondary" {{ 'disabled' if state.locked else '' }}>Save</button>
         </form>
       </div>
+      <form method="post" action="{{ url_for('duplicate_shot', shot_id=shot.id) }}">
+        <button type="submit" class="secondary">Duplicate</button>
+      </form>
       {% if state.locked %}<span class="pill locked" style="align-self:center">LOCKED</span>{% endif %}
     </div>
 
@@ -79,9 +82,23 @@
               <input type="text" name="line" value="{{ entry.line }}" {{ 'disabled' if state.locked else '' }}>
               <button type="submit" class="secondary" {{ 'disabled' if state.locked else '' }}>Save</button>
             </form>
+            <form method="post" action="{{ url_for('remove_dialogue', shot_id=shot.id, index=loop.index0) }}"
+                  onsubmit="return confirm('Remove this line?');">
+              <button type="submit" class="danger small" {{ 'disabled' if state.locked else '' }}>Remove</button>
+            </form>
           </div>
         {% endfor %}
       {% endif %}
+      <form class="inline-form" method="post" action="{{ url_for('add_dialogue', shot_id=shot.id) }}" style="margin-top:0.6rem">
+        <select name="character" {{ 'disabled' if state.locked else '' }}>
+          <option value="">(speaker unset)</option>
+          {% for cid, c in characters.items() %}
+          <option value="{{ cid }}">{{ c.display_name }}</option>
+          {% endfor %}
+        </select>
+        <input type="text" name="line" placeholder="New line&hellip;" {{ 'disabled' if state.locked else '' }}>
+        <button type="submit" class="secondary" {{ 'disabled' if state.locked else '' }}>Add line</button>
+      </form>
     </div>
 
     <div class="card">
@@ -96,10 +113,18 @@
           <div class="take {{ 'accepted' if take.version == state.accepted_voice else '' }}">
             <p class="take-meta">v{{ take.version }}{{ ' (accepted)' if take.version == state.accepted_voice else '' }}: &quot;{{ take.text_used }}&quot;</p>
             <audio controls src="{{ url_for('media', filepath=take.path) }}"></audio>
-            {% if take.version != state.accepted_voice and not state.locked %}
-            <form method="post" action="{{ url_for('accept_voice', shot_id=shot.id, version=take.version) }}">
-              <button type="submit" class="secondary small">Accept this take</button>
-            </form>
+            {% if not state.locked %}
+            <div class="take-actions">
+              {% if take.version != state.accepted_voice %}
+              <form method="post" action="{{ url_for('accept_voice', shot_id=shot.id, version=take.version) }}">
+                <button type="submit" class="secondary small">Accept this take</button>
+              </form>
+              {% endif %}
+              <form method="post" action="{{ url_for('delete_voice_take', shot_id=shot.id, version=take.version) }}"
+                    onsubmit="return confirm('Delete this take? The file stays on disk, just removed from the list.');">
+                <button type="submit" class="danger small">Delete</button>
+              </form>
+            </div>
             {% endif %}
           </div>
         {% endfor %}
@@ -115,10 +140,18 @@
         <div class="take {{ 'accepted' if take.version == state.accepted_video else '' }}">
           <p class="take-meta">v{{ take.version }}{{ ' (accepted)' if take.version == state.accepted_video else '' }}</p>
           <video controls src="{{ url_for('media', filepath=take.path) }}"></video>
-          {% if take.version != state.accepted_video and not state.locked %}
-          <form method="post" action="{{ url_for('accept_video', shot_id=shot.id, version=take.version) }}">
-            <button type="submit" class="secondary small">Accept this take</button>
-          </form>
+          {% if not state.locked %}
+          <div class="take-actions">
+            {% if take.version != state.accepted_video %}
+            <form method="post" action="{{ url_for('accept_video', shot_id=shot.id, version=take.version) }}">
+              <button type="submit" class="secondary small">Accept this take</button>
+            </form>
+            {% endif %}
+            <form method="post" action="{{ url_for('delete_video_take', shot_id=shot.id, version=take.version) }}"
+                  onsubmit="return confirm('Delete this take? The file stays on disk, just removed from the list.');">
+              <button type="submit" class="danger small">Delete</button>
+            </form>
+          </div>
           {% endif %}
         </div>
       {% endfor %}

@@ -33,6 +33,15 @@
           <span class="pill {{ 'done' if shot.accepted_video else '' }}">Video {{ 'v' ~ shot.accepted_video if shot.accepted_video else '—' }}</span>
         </div>
         <div class="shot-card-footer">
+          <form method="post" action="{{ url_for('move_shot', shot_id=shot.id, direction='up') }}">
+            <button type="submit" class="secondary small" title="Move up" {{ 'disabled' if loop.first else '' }}>&uarr;</button>
+          </form>
+          <form method="post" action="{{ url_for('move_shot', shot_id=shot.id, direction='down') }}">
+            <button type="submit" class="secondary small" title="Move down" {{ 'disabled' if loop.last else '' }}>&darr;</button>
+          </form>
+          <form method="post" action="{{ url_for('duplicate_shot', shot_id=shot.id) }}">
+            <button type="submit" class="secondary small">Duplicate</button>
+          </form>
           <form method="post" action="{{ url_for('delete_shot', shot_id=shot.id) }}"
                 onsubmit="return confirm('Delete \'{{ shot.title }}\'? This removes it from the config, generated files on disk are kept.');">
             <button type="submit" class="danger small">Delete</button>

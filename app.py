@@ -119,6 +119,37 @@ def update_dialogue(shot_id, index):
     return redirect(url_for("shot_detail", shot_id=shot_id))
 
 
+@app.route("/shot/<shot_id>/dialogue/add", methods=["POST"])
+def add_dialogue(shot_id):
+    character = request.form.get("character") or None
+    line = request.form.get("line", "").strip()
+    if not line:
+        flash("Dialogue line can't be empty.")
+        return redirect(url_for("shot_detail", shot_id=shot_id))
+    store.add_dialogue_line(shot_id, character, line)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/dialogue/<int:index>/remove", methods=["POST"])
+def remove_dialogue(shot_id, index):
+    store.remove_dialogue_line(shot_id, index)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/duplicate", methods=["POST"])
+def duplicate_shot(shot_id):
+    new_id = store.duplicate_shot(shot_id)
+    if new_id is None:
+        abort(404)
+    return redirect(url_for("shot_detail", shot_id=new_id))
+
+
+@app.route("/shot/<shot_id>/move/<direction>", methods=["POST"])
+def move_shot(shot_id, direction):
+    store.move_shot(shot_id, direction)
+    return redirect(url_for("index"))
+
+
 @app.route("/shot/<shot_id>/voice/generate", methods=["POST"])
 def generate_voice_route(shot_id):
     data = store.get_shot_state(shot_id)
@@ -156,6 +187,12 @@ def accept_voice(shot_id, version):
     return redirect(url_for("shot_detail", shot_id=shot_id))
 
 
+@app.route("/shot/<shot_id>/voice/delete/<int:version>", methods=["POST"])
+def delete_voice_take(shot_id, version):
+    store.delete_voice_take(shot_id, version)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
 @app.route("/shot/<shot_id>/video/generate", methods=["POST"])
 def generate_video_route(shot_id):
     data = store.get_shot_state(shot_id)
@@ -190,6 +227,12 @@ def generate_video_route(shot_id):
 @app.route("/shot/<shot_id>/video/accept/<int:version>", methods=["POST"])
 def accept_video(shot_id, version):
     store.accept_video_take(shot_id, version)
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/shot/<shot_id>/video/delete/<int:version>", methods=["POST"])
+def delete_video_take(shot_id, version):
+    store.delete_video_take(shot_id, version)
     return redirect(url_for("shot_detail", shot_id=shot_id))
 
 
