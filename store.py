@@ -174,7 +174,7 @@ def _slugify(title):
     return slug or "shot"
 
 
-def create_shot(title):
+def create_shot(title, visual_prompt="", characters=None, in_else=True, style=None):
     shots = load_shots()
     existing_ids = {s["id"] for s in shots}
     base = _slugify(title)
@@ -183,14 +183,17 @@ def create_shot(title):
     while shot_id in existing_ids:
         shot_id = f"{base}_{n}"
         n += 1
-    shots.append({
+    new_shot = {
         "id": shot_id,
         "title": title,
-        "in_else": True,
-        "characters": [],
-        "visual_prompt": "",
+        "in_else": in_else,
+        "characters": characters or [],
+        "visual_prompt": visual_prompt,
         "dialogue": [],
-    })
+    }
+    if style:
+        new_shot["style"] = style
+    shots.append(new_shot)
     save_shots(shots)
     return shot_id
 
@@ -231,6 +234,18 @@ def update_shot_in_else(shot_id, in_else):
     save_shots(shots)
 
 
+def update_shot_style(shot_id, style):
+    shots = load_shots()
+    for s in shots:
+        if s["id"] == shot_id:
+            if style:
+                s["style"] = style
+            else:
+                s.pop("style", None)
+            break
+    save_shots(shots)
+
+
 def duplicate_shot(shot_id):
     shot = load_shot(shot_id)
     if shot is None:
@@ -251,6 +266,8 @@ def duplicate_shot(shot_id):
         "visual_prompt": shot["visual_prompt"],
         "dialogue": [dict(d) for d in shot["dialogue"]],
     }
+    if shot.get("style"):
+        new_shot["style"] = shot["style"]
     shots.append(new_shot)
     save_shots(shots)
     return new_id

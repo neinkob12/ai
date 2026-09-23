@@ -7,8 +7,13 @@
 </head>
 <body>
   <div class="page">
-    <h1>Else Clips</h1>
-    <p class="subtitle">{{ shots|length }} shots</p>
+    <div class="header-row">
+      <div>
+        <h1>Else Clips</h1>
+        <p class="subtitle">{{ shots|length }} shots</p>
+      </div>
+      <a class="btn" href="{{ url_for('submit') }}">Submit an idea</a>
+    </div>
 
     {% with messages = get_flashed_messages() %}
       {% if messages %}

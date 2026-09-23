@@ -101,6 +101,12 @@ def update_in_else(shot_id):
     return redirect(url_for("shot_detail", shot_id=shot_id))
 
 
+@app.route("/shot/<shot_id>/style", methods=["POST"])
+def update_style(shot_id):
+    store.update_shot_style(shot_id, request.form.get("style", "").strip())
+    return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
 @app.route("/shot/<shot_id>/unlock", methods=["POST"])
 def unlock(shot_id):
     store.unlock_shot(shot_id)
@@ -197,7 +203,7 @@ def delete_voice_take(shot_id, version):
 def generate_video_route(shot_id):
     data = store.get_shot_state(shot_id)
     shot, state = data["shot"], data["state"]
-    prompt = pipeline.build_video_prompt(state["working_prompt"])
+    prompt = pipeline.build_video_prompt(state["working_prompt"], shot.get("style"))
 
     image_url = None
     if shot.get("in_else"):
@@ -278,6 +284,28 @@ def lock(shot_id):
         return redirect(url_for("shot_detail", shot_id=shot_id))
     store.lock_shot(shot_id)
     return redirect(url_for("shot_detail", shot_id=shot_id))
+
+
+@app.route("/submit", methods=["GET", "POST"])
+def submit():
+    if request.method == "POST":
+        title = request.form.get("title", "").strip()
+        visual_prompt = request.form.get("visual_prompt", "").strip()
+        characters = request.form.getlist("characters")
+        in_else = "in_else" in request.form
+        style = request.form.get("style", "").strip() or None
+
+        if not title or not visual_prompt:
+            flash("Give it a title and a description before submitting.")
+            return redirect(url_for("submit"))
+
+        shot_id = store.create_shot(
+            title, visual_prompt=visual_prompt, characters=characters,
+            in_else=in_else, style=style,
+        )
+        return render_template("submit_thanks.html", shot_id=shot_id, title=title)
+
+    return render_template("submit.html", characters=store.load_characters())
 
 
 @app.route("/media/<path:filepath>")

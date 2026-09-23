@@ -211,3 +211,131 @@ select:disabled { color: var(--text-secondary); background: #f0f0f2; }
   margin: 0 0 1rem;
 }
 .flash li + li { margin-top: 0.3rem; }
+
+a.btn { display: inline-block; text-decoration: none; }
+a.btn:hover { text-decoration: none; }
+
+/* Submission form, Tally-style one-question-at-a-time flow */
+.submit-body {
+  background: #ffffff;
+  padding: 0;
+  margin: 0;
+}
+
+.submit-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: #f0f0f2;
+  z-index: 10;
+}
+.submit-progress-bar {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.submit-form { min-height: 100vh; }
+
+.submit-step {
+  display: none;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+}
+.submit-step.is-active { display: flex; }
+
+.submit-step-inner { max-width: 560px; width: 100%; }
+
+.submit-eyebrow {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 0.6rem;
+}
+
+.submit-question {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 1rem;
+  line-height: 1.25;
+}
+
+.submit-hint { color: var(--text-secondary); font-size: 0.95rem; margin: 0 0 1.2rem; }
+
+.submit-input {
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 0.9rem 0;
+  border: none;
+  border-bottom: 2px solid var(--border);
+  background: transparent;
+  font-family: inherit;
+  color: var(--text);
+}
+.submit-input:focus { outline: none; border-bottom-color: var(--accent); }
+
+.submit-textarea {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+  resize: vertical;
+}
+.submit-textarea:focus { border-color: var(--accent); border-bottom-color: var(--accent); }
+
+.submit-checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+.submit-checkbox-card, .submit-toggle-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.submit-checkbox-card:has(input:checked),
+.submit-toggle-card:has(input:checked) {
+  border-color: var(--accent);
+  background: #eef6ff;
+}
+.submit-checkbox-card input, .submit-toggle-card input { accent-color: var(--accent); }
+
+.submit-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+.submit-next, .submit-submit {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 0.75rem 1.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: auto;
+}
+.submit-next:hover, .submit-submit:hover { background: var(--accent-hover); }
+.submit-back {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0.75rem 0;
+}

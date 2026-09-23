@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Idea submitted</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="submit-body">
+  <div class="submit-step is-active">
+    <div class="submit-step-inner">
+      <p class="submit-eyebrow">Nice.</p>
+      <h1 class="submit-question">&quot;{{ title }}&quot; is in.</h1>
+      <p class="submit-hint">It's sitting in the review queue now.</p>
+      <div class="submit-nav">
+        <a class="btn secondary" href="{{ url_for('submit') }}">Submit another</a>
+        <a class="btn" href="{{ url_for('shot_detail', shot_id=shot_id) }}">Open it &rarr;</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -59,6 +59,14 @@
             <img class="thumb" src="{{ url_for('assets', filepath=locations.else.template_image) }}" alt="die Else">
           {% endif %}
         </div>
+        <div class="meta-block">
+          <div class="meta-label">Style override</div>
+          <form class="inline-form" method="post" action="{{ url_for('update_style', shot_id=shot.id) }}">
+            <input type="text" name="style" value="{{ shot.style or '' }}"
+                   placeholder="Default PS2 house style" {{ 'disabled' if state.locked else '' }}>
+            <button type="submit" class="secondary" {{ 'disabled' if state.locked else '' }}>Save</button>
+          </form>
+        </div>
       </div>
     </div>
 
