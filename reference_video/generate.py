@@ -96,11 +96,16 @@ def log_cost(scene_id: str, resolution: str, num_reference_images: int, duration
     return entry
 
 
-def generate_scene_video(prompt: str, reference_images: list, resolution: str = RESOLUTION) -> str:
+def generate_scene_video(prompt: str, reference_images: list, resolution: str = RESOLUTION,
+                          duration: int = None) -> str:
     """Uploads reference images and generates one scene. reference_images is a list of
     {"path": ..., "label": ...}; the model binds each image to its subject by position,
     so we prepend "Image 1 is <label>. Image 2 is <label>. ..." in the same order the
-    images are uploaded, ahead of the scene's own prompt text. Returns the fal-hosted result URL."""
+    images are uploaded, ahead of the scene's own prompt text. Returns the fal-hosted result URL.
+
+    duration (seconds): UNVERIFIED parameter name/type, guessed from the "Time (seconds)"
+    label on the model's docs page, not confirmed against a live call. If this errors,
+    that's free signal, no cost incurred, tell me the error and I'll adjust the key/type."""
     if not pipeline.FAL_KEY:
         raise RuntimeError("FAL_KEY not set, check your .env")
     image_urls = [pipeline.upload_local_file(str(REFS_DIR / ref["path"])) for ref in reference_images]
@@ -111,6 +116,8 @@ def generate_scene_video(prompt: str, reference_images: list, resolution: str = 
         "reference_image_urls": image_urls,
         "resolution": resolution,
     }
+    if duration is not None:
+        arguments["duration"] = duration
     result = fal_client.subscribe(
         REFERENCE_TO_VIDEO_ENDPOINT,
         arguments=arguments,
@@ -120,9 +127,10 @@ def generate_scene_video(prompt: str, reference_images: list, resolution: str = 
     return result["video"]["url"]
 
 
-def run_scene(scene: dict, resolution: str = RESOLUTION) -> dict:
+def run_scene(scene: dict, resolution: str = RESOLUTION, duration: int = None) -> dict:
     scene_id = scene["id"]
-    video_url = generate_scene_video(scene["prompt"], scene["reference_images"], resolution=resolution)
+    video_url = generate_scene_video(scene["prompt"], scene["reference_images"],
+                                      resolution=resolution, duration=duration)
     video_path = OUTPUT_DIR / f"{scene_id}_video.mp4"
     pipeline.download_to_file(video_url, str(video_path))
 
@@ -156,7 +164,7 @@ def run_scene(scene: dict, resolution: str = RESOLUTION) -> dict:
             "voices": [str(p) for p in voice_paths], "final": str(final_path), "cost": cost_entry}
 
 
-def run_batch(scenes: list, dry_run: bool = False, resolution: str = RESOLUTION) -> list:
+def run_batch(scenes: list, dry_run: bool = False, resolution: str = RESOLUTION, duration: int = None) -> list:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     results = []
     for i, scene in enumerate(scenes, start=1):
@@ -167,7 +175,7 @@ def run_batch(scenes: list, dry_run: bool = False, resolution: str = RESOLUTION)
             print("  (dry run, skipped)")
             continue
         try:
-            results.append(run_scene(scene, resolution=resolution))
+            results.append(run_scene(scene, resolution=resolution, duration=duration))
             print(f"  saved -> {results[-1]['final']}")
         except Exception as e:
             print(f"  FAILED: {e}")
@@ -184,6 +192,10 @@ def main():
     parser.add_argument("--resolution", default=RESOLUTION, choices=["480P", "768P", "1080P"],
                          help=f"480P is ~37%% cheaper than 768P, good for testing identity/composition "
                               f"before spending on a higher-res keeper (default: {RESOLUTION})")
+    parser.add_argument("--duration", type=int, default=None,
+                         help="Fixed output length in seconds (e.g. 5), makes cost predictable instead "
+                              "of model-chosen. UNVERIFIED parameter name, a wrong guess just errors "
+                              "for free, costs nothing. Default: let the model choose (current behavior)")
     args = parser.parse_args()
 
     scenes = json.loads(Path(args.scenes_file).read_text())
@@ -197,7 +209,7 @@ def main():
             print("Nothing to run.")
             return
 
-    results = run_batch(scenes, dry_run=args.dry_run, resolution=args.resolution)
+    results = run_batch(scenes, dry_run=args.dry_run, resolution=args.resolution, duration=args.duration)
 
     ok = sum(1 for r in results if r["status"] == "ok")
     failed = sum(1 for r in results if r["status"] == "failed")
