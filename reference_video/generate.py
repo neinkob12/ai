@@ -71,9 +71,9 @@ def generate_scene_video(prompt: str, reference_images: list, resolution: str = 
     return result["video"]["url"]
 
 
-def run_scene(scene: dict) -> dict:
+def run_scene(scene: dict, resolution: str = RESOLUTION) -> dict:
     scene_id = scene["id"]
-    video_url = generate_scene_video(scene["prompt"], scene["reference_images"])
+    video_url = generate_scene_video(scene["prompt"], scene["reference_images"], resolution=resolution)
     video_path = OUTPUT_DIR / f"{scene_id}_video.mp4"
     pipeline.download_to_file(video_url, str(video_path))
 
@@ -96,7 +96,7 @@ def run_scene(scene: dict) -> dict:
             "voices": [str(p) for p in voice_paths], "final": str(final_path)}
 
 
-def run_batch(scenes: list, dry_run: bool = False) -> list:
+def run_batch(scenes: list, dry_run: bool = False, resolution: str = RESOLUTION) -> list:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     results = []
     for i, scene in enumerate(scenes, start=1):
@@ -107,7 +107,7 @@ def run_batch(scenes: list, dry_run: bool = False) -> list:
             print("  (dry run, skipped)")
             continue
         try:
-            results.append(run_scene(scene))
+            results.append(run_scene(scene, resolution=resolution))
             print(f"  saved -> {results[-1]['final']}")
         except Exception as e:
             print(f"  FAILED: {e}")
@@ -121,6 +121,9 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Print what would run without calling any API")
     parser.add_argument("--only", help="Comma-separated scene ids to run instead of the whole file, "
                                         "e.g. --only s04_begging")
+    parser.add_argument("--resolution", default=RESOLUTION, choices=["480P", "768P", "1080P"],
+                         help=f"480P is ~37%% cheaper than 768P, good for testing identity/composition "
+                              f"before spending on a higher-res keeper (default: {RESOLUTION})")
     args = parser.parse_args()
 
     scenes = json.loads(Path(args.scenes_file).read_text())
@@ -134,7 +137,7 @@ def main():
             print("Nothing to run.")
             return
 
-    results = run_batch(scenes, dry_run=args.dry_run)
+    results = run_batch(scenes, dry_run=args.dry_run, resolution=args.resolution)
 
     ok = sum(1 for r in results if r["status"] == "ok")
     failed = sum(1 for r in results if r["status"] == "failed")
