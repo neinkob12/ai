@@ -7,3 +7,4 @@ output/
 assets/
 reference_video/refs/
 reference_video/output/
+reference_video/cost_log.jsonl

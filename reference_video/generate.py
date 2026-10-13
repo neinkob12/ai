@@ -35,6 +35,7 @@ so off-screen/phone lines are available as separate audio to mix in later.
 import argparse
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -45,6 +46,54 @@ REFERENCE_TO_VIDEO_ENDPOINT = "minimax/h3-max/reference-to-video"
 RESOLUTION = "768P"
 OUTPUT_DIR = Path(__file__).resolve().parent / "output"
 REFS_DIR = Path(__file__).resolve().parent
+COST_LOG_PATH = Path(__file__).resolve().parent / "cost_log.jsonl"
+
+# Published fal.ai per-second rates for this model, and the free-reference-image
+# allowance. The per-extra-image rate is inconsistent across fal's own docs as of
+# this writing (sources disagree, $0.02 vs $0.08 vs a token-based scheme), so
+# that part of the estimate is the least reliable piece, duration x rate is solid.
+PRICE_PER_SECOND = {"480P": 0.05, "768P": 0.08, "1080P": 0.16}
+FREE_REFERENCE_IMAGES = 4
+EXTRA_IMAGE_ESTIMATE = 0.02
+
+
+def get_duration_seconds(path: str):
+    """Best-effort video duration via pymediainfo. Returns None if unavailable
+    rather than guessing, so cost logs are honest about what's measured vs not."""
+    try:
+        from pymediainfo import MediaInfo
+        for track in MediaInfo.parse(path).tracks:
+            if track.track_type == "Video" and track.duration:
+                return track.duration / 1000.0
+    except Exception:
+        pass
+    return None
+
+
+def estimate_cost(resolution: str, num_reference_images: int, duration_s):
+    extra_images = max(0, num_reference_images - FREE_REFERENCE_IMAGES)
+    image_cost = extra_images * EXTRA_IMAGE_ESTIMATE
+    if duration_s is None:
+        return None, image_cost
+    video_cost = duration_s * PRICE_PER_SECOND.get(resolution, PRICE_PER_SECOND["768P"])
+    return video_cost, image_cost
+
+
+def log_cost(scene_id: str, resolution: str, num_reference_images: int, duration_s, video_cost, image_cost):
+    entry = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "scene_id": scene_id,
+        "resolution": resolution,
+        "reference_images": num_reference_images,
+        "duration_s": duration_s,
+        "estimated_video_cost_usd": round(video_cost, 4) if video_cost is not None else None,
+        "estimated_extra_image_cost_usd": round(image_cost, 4),
+        "estimated_total_usd": round((video_cost or 0) + image_cost, 4) if video_cost is not None else None,
+        "note": "estimate from published fal.ai pricing, not an actual invoice",
+    }
+    with open(COST_LOG_PATH, "a") as f:
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    return entry
 
 
 def generate_scene_video(prompt: str, reference_images: list, resolution: str = RESOLUTION) -> str:
@@ -77,6 +126,17 @@ def run_scene(scene: dict, resolution: str = RESOLUTION) -> dict:
     video_path = OUTPUT_DIR / f"{scene_id}_video.mp4"
     pipeline.download_to_file(video_url, str(video_path))
 
+    duration_s = get_duration_seconds(str(video_path))
+    video_cost, image_cost = estimate_cost(resolution, len(scene["reference_images"]), duration_s)
+    cost_entry = log_cost(scene_id, resolution, len(scene["reference_images"]), duration_s, video_cost, image_cost)
+    if video_cost is not None:
+        print(f"  cost estimate: ~${cost_entry['estimated_total_usd']} "
+              f"({duration_s:.1f}s @ {resolution}, {len(scene['reference_images'])} ref images) "
+              f"-> logged in {COST_LOG_PATH.name}")
+    else:
+        print(f"  cost estimate: duration unknown (pymediainfo not available), "
+              f"logged what we know in {COST_LOG_PATH.name}")
+
     dialogue = scene.get("dialogue", [])
     voice_paths = []
     for i, entry in enumerate(dialogue, start=1):
@@ -93,7 +153,7 @@ def run_scene(scene: dict, resolution: str = RESOLUTION) -> dict:
         pipeline.download_to_file(synced_url, str(final_path))
 
     return {"id": scene_id, "status": "ok", "video": str(video_path),
-            "voices": [str(p) for p in voice_paths], "final": str(final_path)}
+            "voices": [str(p) for p in voice_paths], "final": str(final_path), "cost": cost_entry}
 
 
 def run_batch(scenes: list, dry_run: bool = False, resolution: str = RESOLUTION) -> list:
@@ -144,7 +204,11 @@ def main():
     if args.dry_run:
         print(f"\nDry run: {len(scenes)} scenes would run")
     else:
-        print(f"\nDone: {ok} succeeded, {failed} failed")
+        known_costs = [r["cost"]["estimated_total_usd"] for r in results
+                       if r["status"] == "ok" and r["cost"]["estimated_total_usd"] is not None]
+        total = f", ~${sum(known_costs):.2f} estimated total" if known_costs else ""
+        print(f"\nDone: {ok} succeeded, {failed} failed{total}")
+        print(f"Full cost log: {COST_LOG_PATH}")
 
 
 if __name__ == "__main__":
