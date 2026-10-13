@@ -89,7 +89,7 @@
   },
   {
     "id": "s03c_laurenz_spills_coffee",
-    "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Laurenz walks past the cafe table into LARP Coffee at Chlodwigplatz, about to order a coffee. Max and Daniel suddenly shout his name. Laurenz flinches hard in shock, spilling a full cup of coffee all down the front of his shirt, staggering back.",
+    "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Laurenz walks past a cafe table at Chlodwigplatz where two friends are sitting, about to go inside and order a coffee. The two friends at the table suddenly shout his name. Laurenz flinches hard in shock, spilling a full cup of coffee all down the front of his shirt, staggering back.",
     "reference_images": [
       {
         "path": "refs/laurenz_head.png",
@@ -98,22 +98,6 @@
       {
         "path": "refs/laurenz_body.png",
         "label": "Laurenz's body"
-      },
-      {
-        "path": "refs/max_head.jpeg",
-        "label": "Max's face"
-      },
-      {
-        "path": "refs/max_body.jpeg",
-        "label": "Max's body"
-      },
-      {
-        "path": "refs/daniel_head.jpeg",
-        "label": "Daniel's face"
-      },
-      {
-        "path": "refs/daniel_body.jpg",
-        "label": "Daniel's body"
       },
       {
         "path": "refs/loc_chlodwigplatz.png",
@@ -122,8 +106,8 @@
     ]
   },
   {
-    "id": "s04_begging",
-    "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Outside the cafe at Chlodwigplatz, Max and Daniel kneel dramatically on the sidewalk in front of Laurenz, hands clasped, begging on their knees to finally be allowed to drive. Laurenz looks down at them with a disgusted, smug grin and says in German: 'Ok ihr gooner.'",
+    "id": "s04a_begging_wide",
+    "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Outside the cafe at Chlodwigplatz, two young men kneel dramatically on the sidewalk, hands clasped, begging on their knees. In front of them stands Laurenz, looking down at them.",
     "reference_images": [
       {
         "path": "refs/laurenz_head.png",
@@ -134,20 +118,22 @@
         "label": "Laurenz's body"
       },
       {
-        "path": "refs/max_head.jpeg",
-        "label": "Max's face"
+        "path": "refs/loc_chlodwigplatz.png",
+        "label": "the Chlodwigplatz cafe location"
+      }
+    ]
+  },
+  {
+    "id": "s04b_begging_line",
+    "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Close on Laurenz standing outside the cafe at Chlodwigplatz, looking down with a disgusted, smug grin. Laurenz says in German: 'Ok ihr gooner.'",
+    "reference_images": [
+      {
+        "path": "refs/laurenz_head.png",
+        "label": "Laurenz's face"
       },
       {
-        "path": "refs/max_body.jpeg",
-        "label": "Max's body"
-      },
-      {
-        "path": "refs/daniel_head.jpeg",
-        "label": "Daniel's face"
-      },
-      {
-        "path": "refs/daniel_body.jpg",
-        "label": "Daniel's body"
+        "path": "refs/laurenz_body.png",
+        "label": "Laurenz's body"
       },
       {
         "path": "refs/loc_chlodwigplatz.png",
@@ -282,25 +268,23 @@
     ]
   },
   {
-    "id": "s07_aftermath",
-    "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. The BMW M2 has crashed straight into the storefront of Nhas City Chicken, a Cologne fried chicken restaurant, front window completely shattered, glass scattered across the hood and sidewalk. Max, Daniel, and Laurenz climb out of the wrecked car, all unharmed. Laurenz is furious, shouting and pointing at Daniel, visibly yelling at him.",
+    "id": "s07a_aftermath_wide",
+    "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. The BMW M2 has crashed straight into the storefront of Nhas City Chicken, a Cologne fried chicken restaurant, front window completely shattered, glass scattered across the hood and sidewalk. Three friends climb out of the wrecked car, all unharmed, looking shaken.",
     "reference_images": [
       {
-        "path": "refs/max_head.jpeg",
-        "label": "Max's face"
+        "path": "refs/m2.jpg",
+        "label": "the white BMW M2 car"
       },
       {
-        "path": "refs/max_body.jpeg",
-        "label": "Max's body"
-      },
-      {
-        "path": "refs/daniel_head.jpeg",
-        "label": "Daniel's face"
-      },
-      {
-        "path": "refs/daniel_body.jpg",
-        "label": "Daniel's body"
-      },
+        "path": "refs/loc_nhas_city_chicken.png",
+        "label": "the Nhas City Chicken restaurant location"
+      }
+    ]
+  },
+  {
+    "id": "s07b_laurenz_yells_at_daniel",
+    "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Close on Laurenz standing next to the wrecked BMW M2 outside Nhas City Chicken, furious, shouting and pointing directly at Daniel, who stands nearby looking guilty.",
+    "reference_images": [
       {
         "path": "refs/laurenz_head.png",
         "label": "Laurenz's face"
@@ -310,8 +294,12 @@
         "label": "Laurenz's body"
       },
       {
-        "path": "refs/m2.jpg",
-        "label": "the white BMW M2 car"
+        "path": "refs/daniel_head.jpeg",
+        "label": "Daniel's face"
+      },
+      {
+        "path": "refs/daniel_body.jpg",
+        "label": "Daniel's body"
       },
       {
         "path": "refs/loc_nhas_city_chicken.png",
