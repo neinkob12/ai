@@ -108,9 +108,21 @@ def main():
     parser = argparse.ArgumentParser(description="Batch-generate scenes via fal.ai reference-to-video")
     parser.add_argument("scenes_file", help="Path to a JSON file holding a list of scenes")
     parser.add_argument("--dry-run", action="store_true", help="Print what would run without calling any API")
+    parser.add_argument("--only", help="Comma-separated scene ids to run instead of the whole file, "
+                                        "e.g. --only s04_begging")
     args = parser.parse_args()
 
     scenes = json.loads(Path(args.scenes_file).read_text())
+    if args.only:
+        wanted = set(args.only.split(","))
+        scenes = [s for s in scenes if s["id"] in wanted]
+        missing = wanted - {s["id"] for s in scenes}
+        if missing:
+            print(f"Warning: these ids weren't found in {args.scenes_file}: {', '.join(missing)}")
+        if not scenes:
+            print("Nothing to run.")
+            return
+
     results = run_batch(scenes, dry_run=args.dry_run)
 
     ok = sum(1 for r in results if r["status"] == "ok")
