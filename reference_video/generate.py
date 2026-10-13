@@ -36,7 +36,7 @@ import fal_client
 import pipeline
 
 REFERENCE_TO_VIDEO_ENDPOINT = "minimax/h3-max/reference-to-video"
-RESOLUTION = "768p"
+RESOLUTION = "768P"
 OUTPUT_DIR = Path(__file__).resolve().parent / "output"
 REFS_DIR = Path(__file__).resolve().parent
 
