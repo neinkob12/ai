@@ -5,3 +5,5 @@ __pycache__/
 state/
 output/
 assets/
+reference_video/refs/
+reference_video/scenes.json

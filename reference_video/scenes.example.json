@@ -1,0 +1,18 @@
+[
+  {
+    "id": "scene_01",
+    "prompt": "Describe what happens in this scene, plain language, no need for fancy wording.",
+    "reference_images": [
+      "reference_video/refs/subject_face.jpg",
+      "reference_video/refs/subject_fullbody.jpg"
+    ]
+  },
+  {
+    "id": "scene_02",
+    "prompt": "Next scene's description.",
+    "reference_images": [
+      "reference_video/refs/subject_face.jpg",
+      "reference_video/refs/subject_fullbody.jpg"
+    ]
+  }
+]
