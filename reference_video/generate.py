@@ -35,7 +35,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import fal_client
 import pipeline
 
-REFERENCE_TO_VIDEO_ENDPOINT = "fal-ai/minimax/h3-max/reference-to-video"
+REFERENCE_TO_VIDEO_ENDPOINT = "minimax/h3-max/reference-to-video"
 RESOLUTION = "768p"
 OUTPUT_DIR = Path(__file__).resolve().parent / "output"
 REFS_DIR = Path(__file__).resolve().parent
