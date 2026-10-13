@@ -3,3 +3,4 @@ fal-client
 requests
 python-dotenv
 pymediainfo
+Pillow
