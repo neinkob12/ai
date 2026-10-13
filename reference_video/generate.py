@@ -9,22 +9,28 @@ Scene schema (see scenes.json):
 {
   "id": "s01_...",
   "prompt": "...",
-  "reference_images": ["refs/daniel_face.jpg", "refs/daniel_body.jpg", ...],
+  "reference_images": [
+    {"path": "refs/daniel_head.jpeg", "label": "Daniel's face"},
+    {"path": "refs/daniel_body.jpg", "label": "Daniel's body"},
+    ...
+  ],
   "dialogue": [                      # optional, omit for a silent shot
     {"character": "daniel", "voice_id": "...", "line": "...", "lipsync": true}
   ]
 }
+IMPORTANT: this model binds reference images to subjects by POSITION, named
+in the prompt text as "Image 1", "Image 2", etc, in the same order they're
+sent in reference_image_urls. A flat list of image URLs with no names in
+the prompt means the model guesses who's who, which is exactly what went
+wrong on the first real test (Daniel's face ended up on the wrong role).
+generate_scene_video() builds an "Image 1 is Daniel's face. Image 2 is ..."
+preamble automatically from each image's "label", in order, so every scene
+must give each reference image a label.
+
 Lipsync only runs when a shot has exactly one dialogue entry with "lipsync": true
 (same rule as the main app: can't lipsync a shot with two speakers at once).
 Every dialogue entry still gets its voice generated even when lipsync is off,
 so off-screen/phone lines are available as separate audio to mix in later.
-
-NOTE: the exact argument names for the reference-to-video endpoint below
-(REFERENCE_TO_VIDEO_ENDPOINT, and "reference_image_urls" in generate_scene_video)
-are based on fal.ai's documented pattern for this model family, not a live
-test against the endpoint. Check the model's page on fal.ai before your
-first real run in case the parameter name differs, that's a one-line fix
-here if so.
 """
 import argparse
 import json
@@ -41,13 +47,18 @@ OUTPUT_DIR = Path(__file__).resolve().parent / "output"
 REFS_DIR = Path(__file__).resolve().parent
 
 
-def generate_scene_video(prompt: str, reference_image_paths: list, resolution: str = RESOLUTION) -> str:
-    """Uploads reference images, generates one scene, returns the fal-hosted result URL."""
+def generate_scene_video(prompt: str, reference_images: list, resolution: str = RESOLUTION) -> str:
+    """Uploads reference images and generates one scene. reference_images is a list of
+    {"path": ..., "label": ...}; the model binds each image to its subject by position,
+    so we prepend "Image 1 is <label>. Image 2 is <label>. ..." in the same order the
+    images are uploaded, ahead of the scene's own prompt text. Returns the fal-hosted result URL."""
     if not pipeline.FAL_KEY:
         raise RuntimeError("FAL_KEY not set, check your .env")
-    image_urls = [pipeline.upload_local_file(str(REFS_DIR / p)) for p in reference_image_paths]
+    image_urls = [pipeline.upload_local_file(str(REFS_DIR / ref["path"])) for ref in reference_images]
+    labels = " ".join(f"Image {i}: {ref['label']}." for i, ref in enumerate(reference_images, start=1))
+    full_prompt = f"{labels} {prompt}".strip()
     arguments = {
-        "prompt": prompt,
+        "prompt": full_prompt,
         "reference_image_urls": image_urls,
         "resolution": resolution,
     }

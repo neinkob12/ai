@@ -2,81 +2,401 @@
   {
     "id": "s01_phone_daniel",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Daniel and Max sit outside a small Cologne cafe at Chlodwigplatz called LARP Coffee, blue signage and decor, drinking coffee from paper cups. Daniel holds his phone to his ear mid-call, slightly impatient. Daniel says in German: 'Was geht Lauge, wann koennen wir endlich M2 fahren?' A muffled voice replies through the phone, barely audible: 'Bruuuder, naechste Woche vallah.' Daniel hangs up, visibly annoyed, Max shakes his head next to him.",
-    "reference_images": ["refs/daniel_head.jpeg", "refs/daniel_body.jpg", "refs/max_head.jpeg", "refs/max_body.jpeg", "refs/loc_chlodwigplatz.png"]
+    "reference_images": [
+      {
+        "path": "refs/daniel_head.jpeg",
+        "label": "Daniel's face"
+      },
+      {
+        "path": "refs/daniel_body.jpg",
+        "label": "Daniel's body"
+      },
+      {
+        "path": "refs/max_head.jpeg",
+        "label": "Max's face"
+      },
+      {
+        "path": "refs/max_body.jpeg",
+        "label": "Max's body"
+      },
+      {
+        "path": "refs/loc_chlodwigplatz.png",
+        "label": "the Chlodwigplatz cafe location"
+      }
+    ]
   },
   {
     "id": "s02_phone_max",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Same cafe table at Chlodwigplatz, LARP Coffee blue signage visible. Max and Daniel smoking cigarettes, coffee cups in front of them. Max picks up his phone and calls. Max says in German: 'Wann koennen wir M2 fahren bro bitte wir muessen endlich.' A muffled voice replies through the phone: 'Bro nerv mal nicht!' and hangs up. Max stares at his phone, annoyed.",
-    "reference_images": ["refs/max_head.jpeg", "refs/max_body.jpeg", "refs/daniel_head.jpeg", "refs/daniel_body.jpg", "refs/loc_chlodwigplatz.png"]
+    "reference_images": [
+      {
+        "path": "refs/max_head.jpeg",
+        "label": "Max's face"
+      },
+      {
+        "path": "refs/max_body.jpeg",
+        "label": "Max's body"
+      },
+      {
+        "path": "refs/daniel_head.jpeg",
+        "label": "Daniel's face"
+      },
+      {
+        "path": "refs/daniel_body.jpg",
+        "label": "Daniel's body"
+      },
+      {
+        "path": "refs/loc_chlodwigplatz.png",
+        "label": "the Chlodwigplatz cafe location"
+      }
+    ]
   },
   {
     "id": "s03a_max_complains",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Max sitting at the cafe table at Chlodwigplatz, cigarette in hand, leans back and says in German, frustrated: 'Bruder, Laurenz laesst uns nie fahren.'",
-    "reference_images": ["refs/max_head.jpeg", "refs/max_body.jpeg", "refs/loc_chlodwigplatz.png"]
+    "reference_images": [
+      {
+        "path": "refs/max_head.jpeg",
+        "label": "Max's face"
+      },
+      {
+        "path": "refs/max_body.jpeg",
+        "label": "Max's body"
+      },
+      {
+        "path": "refs/loc_chlodwigplatz.png",
+        "label": "the Chlodwigplatz cafe location"
+      }
+    ]
   },
   {
     "id": "s03b_daniel_agrees",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Daniel at the same cafe table, cigarette in hand, nods and says in German: 'Ja, vallah, Aip.'",
-    "reference_images": ["refs/daniel_head.jpeg", "refs/daniel_body.jpg", "refs/loc_chlodwigplatz.png"]
+    "reference_images": [
+      {
+        "path": "refs/daniel_head.jpeg",
+        "label": "Daniel's face"
+      },
+      {
+        "path": "refs/daniel_body.jpg",
+        "label": "Daniel's body"
+      },
+      {
+        "path": "refs/loc_chlodwigplatz.png",
+        "label": "the Chlodwigplatz cafe location"
+      }
+    ]
   },
   {
     "id": "s03c_laurenz_spills_coffee",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Laurenz walks past the cafe table into LARP Coffee at Chlodwigplatz, about to order a coffee. Max and Daniel suddenly shout his name. Laurenz flinches hard in shock, spilling a full cup of coffee all down the front of his shirt, staggering back.",
-    "reference_images": ["refs/laurenz_head.png", "refs/laurenz_body.png", "refs/max_head.jpeg", "refs/max_body.jpeg", "refs/daniel_head.jpeg", "refs/daniel_body.jpg", "refs/loc_chlodwigplatz.png"]
+    "reference_images": [
+      {
+        "path": "refs/laurenz_head.png",
+        "label": "Laurenz's face"
+      },
+      {
+        "path": "refs/laurenz_body.png",
+        "label": "Laurenz's body"
+      },
+      {
+        "path": "refs/max_head.jpeg",
+        "label": "Max's face"
+      },
+      {
+        "path": "refs/max_body.jpeg",
+        "label": "Max's body"
+      },
+      {
+        "path": "refs/daniel_head.jpeg",
+        "label": "Daniel's face"
+      },
+      {
+        "path": "refs/daniel_body.jpg",
+        "label": "Daniel's body"
+      },
+      {
+        "path": "refs/loc_chlodwigplatz.png",
+        "label": "the Chlodwigplatz cafe location"
+      }
+    ]
   },
   {
     "id": "s04_begging",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Outside the cafe at Chlodwigplatz, Max and Daniel kneel dramatically on the sidewalk in front of Laurenz, hands clasped, begging on their knees to finally be allowed to drive. Laurenz looks down at them with a disgusted, smug grin and says in German: 'Ok ihr gooner.'",
-    "reference_images": ["refs/laurenz_head.png", "refs/laurenz_body.png", "refs/max_head.jpeg", "refs/max_body.jpeg", "refs/daniel_head.jpeg", "refs/daniel_body.jpg", "refs/loc_chlodwigplatz.png"]
+    "reference_images": [
+      {
+        "path": "refs/laurenz_head.png",
+        "label": "Laurenz's face"
+      },
+      {
+        "path": "refs/laurenz_body.png",
+        "label": "Laurenz's body"
+      },
+      {
+        "path": "refs/max_head.jpeg",
+        "label": "Max's face"
+      },
+      {
+        "path": "refs/max_body.jpeg",
+        "label": "Max's body"
+      },
+      {
+        "path": "refs/daniel_head.jpeg",
+        "label": "Daniel's face"
+      },
+      {
+        "path": "refs/daniel_body.jpg",
+        "label": "Daniel's body"
+      },
+      {
+        "path": "refs/loc_chlodwigplatz.png",
+        "label": "the Chlodwigplatz cafe location"
+      }
+    ]
   },
   {
     "id": "s05_establishing_ringe",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Wide shot of a BMW M2 driving down the Koelner Ringe in Cologne, multiple lanes of traffic, old buildings lining the street. Inside the car, Max is in the driver's seat and Daniel is in the passenger seat, both relaxed, windows down.",
-    "reference_images": ["refs/max_head.jpeg", "refs/max_body.jpeg", "refs/daniel_head.jpeg", "refs/daniel_body.jpg", "refs/m2.jpg", "refs/ringe.png"]
+    "reference_images": [
+      {
+        "path": "refs/max_head.jpeg",
+        "label": "Max's face"
+      },
+      {
+        "path": "refs/max_body.jpeg",
+        "label": "Max's body"
+      },
+      {
+        "path": "refs/daniel_head.jpeg",
+        "label": "Daniel's face"
+      },
+      {
+        "path": "refs/daniel_body.jpg",
+        "label": "Daniel's body"
+      },
+      {
+        "path": "refs/m2.jpg",
+        "label": "the white BMW M2 car"
+      },
+      {
+        "path": "refs/ringe.png",
+        "label": "the Koelner Ringe street"
+      }
+    ]
   },
   {
     "id": "s05_max_driving",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Inside the BMW M2 driving along the Koelner Ringe. Max is driving casually, relaxed posture. Laurenz, sitting in the back seat, leans forward laughing and says in German: 'Bro du faehrst wie 12 jaehriger achhhh.'",
-    "reference_images": ["refs/max_head.jpeg", "refs/max_body.jpeg", "refs/laurenz_head.png", "refs/laurenz_body.png", "refs/m2.jpg", "refs/ringe.png"]
+    "reference_images": [
+      {
+        "path": "refs/max_head.jpeg",
+        "label": "Max's face"
+      },
+      {
+        "path": "refs/max_body.jpeg",
+        "label": "Max's body"
+      },
+      {
+        "path": "refs/laurenz_head.png",
+        "label": "Laurenz's face"
+      },
+      {
+        "path": "refs/laurenz_body.png",
+        "label": "Laurenz's body"
+      },
+      {
+        "path": "refs/m2.jpg",
+        "label": "the white BMW M2 car"
+      },
+      {
+        "path": "refs/ringe.png",
+        "label": "the Koelner Ringe street"
+      }
+    ]
   },
   {
     "id": "s06a_daniel_takes_wheel",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. The BMW M2 stopped briefly along the Koelner Ringe, Daniel gets behind the wheel instead, adjusting the seat, confident grin. Daniel says in German: 'Ich zeig dir wie das geht achhhh.'",
-    "reference_images": ["refs/daniel_head.jpeg", "refs/daniel_body.jpg", "refs/m2.jpg", "refs/ringe.png"]
+    "reference_images": [
+      {
+        "path": "refs/daniel_head.jpeg",
+        "label": "Daniel's face"
+      },
+      {
+        "path": "refs/daniel_body.jpg",
+        "label": "Daniel's body"
+      },
+      {
+        "path": "refs/m2.jpg",
+        "label": "the white BMW M2 car"
+      },
+      {
+        "path": "refs/ringe.png",
+        "label": "the Koelner Ringe street"
+      }
+    ]
   },
   {
     "id": "s06b_laurenz_screams",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Daniel drives the BMW M2 extremely fast and aggressively down the Koelner Ringe, engine roaring, swerving slightly. In the back seat, Laurenz grips the seat in terror and screams in German: 'HOER AUF BROOOO!'",
-    "reference_images": ["refs/daniel_head.jpeg", "refs/daniel_body.jpg", "refs/laurenz_head.png", "refs/laurenz_body.png", "refs/m2.jpg", "refs/ringe.png"]
+    "reference_images": [
+      {
+        "path": "refs/daniel_head.jpeg",
+        "label": "Daniel's face"
+      },
+      {
+        "path": "refs/daniel_body.jpg",
+        "label": "Daniel's body"
+      },
+      {
+        "path": "refs/laurenz_head.png",
+        "label": "Laurenz's face"
+      },
+      {
+        "path": "refs/laurenz_body.png",
+        "label": "Laurenz's body"
+      },
+      {
+        "path": "refs/m2.jpg",
+        "label": "the white BMW M2 car"
+      },
+      {
+        "path": "refs/ringe.png",
+        "label": "the Koelner Ringe street"
+      }
+    ]
   },
   {
     "id": "s06c_crash",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. The BMW M2 suddenly swerves out of control, tires screeching, loud crash sound as it veers off the road.",
-    "reference_images": ["refs/m2.jpg", "refs/ringe.png"]
+    "reference_images": [
+      {
+        "path": "refs/m2.jpg",
+        "label": "the white BMW M2 car"
+      },
+      {
+        "path": "refs/ringe.png",
+        "label": "the Koelner Ringe street"
+      }
+    ]
   },
   {
     "id": "s07_aftermath",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. The BMW M2 has crashed straight into the storefront of Nhas City Chicken, a Cologne fried chicken restaurant, front window completely shattered, glass scattered across the hood and sidewalk. Max, Daniel, and Laurenz climb out of the wrecked car, all unharmed. Laurenz is furious, shouting and pointing at Daniel, visibly yelling at him.",
-    "reference_images": ["refs/max_head.jpeg", "refs/max_body.jpeg", "refs/daniel_head.jpeg", "refs/daniel_body.jpg", "refs/laurenz_head.png", "refs/laurenz_body.png", "refs/m2.jpg", "refs/loc_nhas_city_chicken.png"]
+    "reference_images": [
+      {
+        "path": "refs/max_head.jpeg",
+        "label": "Max's face"
+      },
+      {
+        "path": "refs/max_body.jpeg",
+        "label": "Max's body"
+      },
+      {
+        "path": "refs/daniel_head.jpeg",
+        "label": "Daniel's face"
+      },
+      {
+        "path": "refs/daniel_body.jpg",
+        "label": "Daniel's body"
+      },
+      {
+        "path": "refs/laurenz_head.png",
+        "label": "Laurenz's face"
+      },
+      {
+        "path": "refs/laurenz_body.png",
+        "label": "Laurenz's body"
+      },
+      {
+        "path": "refs/m2.jpg",
+        "label": "the white BMW M2 car"
+      },
+      {
+        "path": "refs/loc_nhas_city_chicken.png",
+        "label": "the Nhas City Chicken restaurant location"
+      }
+    ]
   },
   {
     "id": "s08a_omar_with_joint",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Omar steps out of the entrance of Nhas City Chicken, holding a large, thick joint in one hand, looking at the wrecked car and broken glass. Omar says in German: 'Bruder, was ist passiert?'",
-    "reference_images": ["refs/omar_face.jpeg", "refs/omar_body.jpeg", "refs/loc_nhas_city_chicken.png"]
+    "reference_images": [
+      {
+        "path": "refs/omar_face.jpeg",
+        "label": "Omar's face"
+      },
+      {
+        "path": "refs/omar_body.jpeg",
+        "label": "Omar's body"
+      },
+      {
+        "path": "refs/loc_nhas_city_chicken.png",
+        "label": "the Nhas City Chicken restaurant location"
+      }
+    ]
   },
   {
     "id": "s08b_laurenz_shocked",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Laurenz stares at Omar's hand, eyes wide in shock at the joint Omar is holding, and screams in German: 'OMAR NAAAS kifft???'",
-    "reference_images": ["refs/laurenz_head.png", "refs/laurenz_body.png", "refs/omar_face.jpeg", "refs/omar_body.jpeg", "refs/loc_nhas_city_chicken.png"]
+    "reference_images": [
+      {
+        "path": "refs/laurenz_head.png",
+        "label": "Laurenz's face"
+      },
+      {
+        "path": "refs/laurenz_body.png",
+        "label": "Laurenz's body"
+      },
+      {
+        "path": "refs/omar_face.jpeg",
+        "label": "Omar's face"
+      },
+      {
+        "path": "refs/omar_body.jpeg",
+        "label": "Omar's body"
+      },
+      {
+        "path": "refs/loc_nhas_city_chicken.png",
+        "label": "the Nhas City Chicken restaurant location"
+      }
+    ]
   },
   {
     "id": "s08c_daniel_brushes_off",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Daniel, standing near the wrecked car, waves a hand dismissively and says in German: 'schere diggi.'",
-    "reference_images": ["refs/daniel_head.jpeg", "refs/daniel_body.jpg", "refs/loc_nhas_city_chicken.png"]
+    "reference_images": [
+      {
+        "path": "refs/daniel_head.jpeg",
+        "label": "Daniel's face"
+      },
+      {
+        "path": "refs/daniel_body.jpg",
+        "label": "Daniel's body"
+      },
+      {
+        "path": "refs/loc_nhas_city_chicken.png",
+        "label": "the Nhas City Chicken restaurant location"
+      }
+    ]
   },
   {
     "id": "s08d_omar_offers_food",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Omar, still holding the joint, tilts his head and asks in German: 'Wollt ihr ein Halbes Haehnchen Spezial und einen Dry Sift?'",
-    "reference_images": ["refs/omar_face.jpeg", "refs/omar_body.jpeg", "refs/loc_nhas_city_chicken.png"]
+    "reference_images": [
+      {
+        "path": "refs/omar_face.jpeg",
+        "label": "Omar's face"
+      },
+      {
+        "path": "refs/omar_body.jpeg",
+        "label": "Omar's body"
+      },
+      {
+        "path": "refs/loc_nhas_city_chicken.png",
+        "label": "the Nhas City Chicken restaurant location"
+      }
+    ]
   }
 ]
