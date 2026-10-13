@@ -16,7 +16,7 @@
   },
   {
     "id": "s03b_daniel_agrees",
-    "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Daniel at the same cafe table, cigarette in hand, nods and says in German: 'Ja, vallah, eyip.'",
+    "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Daniel at the same cafe table, cigarette in hand, nods and says in German: 'Ja, vallah, Aip.'",
     "reference_images": ["refs/daniel_face.jpg", "refs/daniel_body.jpg", "refs/loc_chlodwigplatz.jpg"]
   },
   {
