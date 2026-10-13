@@ -8,6 +8,7 @@
   {"type": "scene", "id": "s03c_laurenz_spills_coffee"},
   {"type": "scene", "id": "s04a_begging_wide"},
   {"type": "scene", "id": "s04b_begging_line"},
+  {"type": "scene", "id": "s04c_begging_plea"},
   {"type": "scene", "id": "s05_establishing_ringe"},
   {"type": "scene", "id": "s05_max_driving"},
   {"type": "scene", "id": "s06a_daniel_takes_wheel"},
@@ -18,5 +19,6 @@
   {"type": "scene", "id": "s08a_omar_with_joint"},
   {"type": "scene", "id": "s08b_laurenz_shocked"},
   {"type": "scene", "id": "s08c_daniel_brushes_off"},
-  {"type": "scene", "id": "s08d_omar_offers_food"}
+  {"type": "scene", "id": "s08d_omar_offers_food"},
+  {"type": "scene", "id": "s08e_max_yells_yes"}
 ]

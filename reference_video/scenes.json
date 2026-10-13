@@ -142,6 +142,32 @@
     ]
   },
   {
+    "id": "s04c_begging_plea",
+    "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Daniel and Max kneel on the ground in front of the cafe at Chlodwigplatz, hands clasped together, pleading up at someone off-camera. Daniel and Max say in German, desperate: 'Bitte, bitte, Laurenz, lass uns fahren, bitte, bitte.'",
+    "reference_images": [
+      {
+        "path": "refs/daniel_head.jpeg",
+        "label": "Daniel's face"
+      },
+      {
+        "path": "refs/daniel_body.jpg",
+        "label": "Daniel's body"
+      },
+      {
+        "path": "refs/max_head.jpeg",
+        "label": "Max's face"
+      },
+      {
+        "path": "refs/max_body.jpeg",
+        "label": "Max's body"
+      },
+      {
+        "path": "refs/loc_chlodwigplatz.png",
+        "label": "the Chlodwigplatz cafe location"
+      }
+    ]
+  },
+  {
     "id": "s05_establishing_ringe",
     "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Wide shot of a BMW M2 driving down the Koelner Ringe in Cologne, multiple lanes of traffic, old buildings lining the street. Inside the car, Max is in the driver's seat and Daniel is in the passenger seat, both relaxed, windows down.",
     "reference_images": [
@@ -380,6 +406,24 @@
       {
         "path": "refs/omar_body.jpeg",
         "label": "Omar's body"
+      },
+      {
+        "path": "refs/loc_nhas_city_chicken.png",
+        "label": "the Nhas City Chicken restaurant location"
+      }
+    ]
+  },
+  {
+    "id": "s08e_max_yells_yes",
+    "prompt": "Photorealistic handheld smartphone footage, natural daylight, documentary vlog style, candid unposed framing, realistic skin texture, natural motion, Cologne Germany street setting. Max stands in front of Nhas City Chicken, completely losing it with excitement, arms thrown up, screaming in German: 'Ja, ja, unbedingt!'",
+    "reference_images": [
+      {
+        "path": "refs/max_head.jpeg",
+        "label": "Max's face"
+      },
+      {
+        "path": "refs/max_body.jpeg",
+        "label": "Max's body"
       },
       {
         "path": "refs/loc_nhas_city_chicken.png",
