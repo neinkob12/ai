@@ -6,4 +6,4 @@ state/
 output/
 assets/
 reference_video/refs/
-reference_video/scenes.json
+reference_video/output/
